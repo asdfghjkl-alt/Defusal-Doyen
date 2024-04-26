@@ -1,0 +1,264 @@
+What is a desk check used for?
+Recording variable information
+Gathering user information
+Planning
+Debugging
+4
+A Gantt chart is used to track what?
+The progress of the project
+The roles of each group member
+The timeline of the project
+The resources required by each task
+3
+Why is a storyboard useful?
+To help visualise the interactions between pages
+To help visualise the effects of user input
+To help visualise the function of algorithms
+To help visualise the flow of data between programs
+1
+How are IF statements represented in flowcharts?
+Rhombus
+Rectangle
+Oval
+Diamond
+4
+Which of these is a form of optical storage?
+Hard Drive
+Phonograph Record
+Compact Disc
+Floppy Disc
+3
+What is the name of the main computing element on a personal computer?
+Graphical Processing Unit
+Computational processing Unit
+Tensor Processing Unit
+Central Processing Unit
+4
+What colour pixels are used to display a digital image on a monitor?
+Red Green Blue
+Cyan Magenta Yellow 
+Red Yellow Blue
+HEX
+1
+What is the name of the formula y=mx+b?
+Linear Form
+Slope Intercept Form
+Point-Slope Form
+Standard Form
+2
+What is the perimeter of a circle called?
+Radius
+Diameter
+Sector
+Circumference
+4
+What is another name for SUVAT equations?
+Equations of movement
+Equations of motion
+Equations of mechanics
+Equations of manoeuvrability
+2
+What is the name of the standard unit of force?
+Newton
+Leibniz
+Power
+Vector
+1
+Who wrote the play Hamlet?
+J. K. Rowling
+Stephen King
+William Shakespeare
+Colleen Hoover
+3
+What is the meaning of prose?
+Written language in ordinary form
+Written language in poetic form
+Written language in academic form
+Written language in informal form
+1
+What is the meaning of contraception?
+Using devices to lubricate during intercourse
+Using devices to stop sperm production
+Using devices to stop unwanted pregnancies
+Using devices to stop the menstrual cycle
+3
+What are the five basic food groups?
+Grains, Veggies, Fruit, Dairy, Meat
+Grains, Veggies, Fruit, Dairy, Sugar
+Grains, Veggies, Fruit, Dairy, Water
+Grains, Veggies, Fruit, Dairy, Legumes
+1
+In a structure chart an open circle with an arrow indicates what?
+Data request
+Control parameter
+Repetition
+Parameter
+4
+What is camel case used for in pseudocode?
+To name functions
+To name loops/if statements
+To name variables
+To name subprograms
+3
+Which of these is NOT part of stage 1 of the structured approach?
+Gathering user requirements
+Planning the scope of the project
+Checking the practicality of the project
+Creating a structure chart
+4
+Why might the structured approach be chosen over the agile approach?
+High quality assurance
+Small timeline
+Low budget
+Evolving requirements
+1
+Which of these file formats use a form of lossless compression?
+.jpeg
+.jpg
+.png
+.mp3
+3
+What is the name of the lowest level of programming language used in programming?
+Binary
+Assembly Code
+C++
+Machine Code
+4
+What is the name of the standard cycle the CPU performs to complete computations?
+Fetch Decode Execute Cycle
+Find Store Evaluate Cycle
+Input Process Output Cycle
+Access Process Assess Cycle
+1
+What is the vertical length of the radius of the unit circle?
+Cos(Ө)
+Sin(Ө)
+Tan(Ө)
+Cot(Ө)
+2
+Who is a popular Australian mathematics Youtuber from the following?
+Veritasium
+3 Blue 1 Brown
+Black Pen Red Pen
+Eddie Woo
+4
+What is the name of the layer of air closest to the surface of the earth?
+Atmosphere
+Troposphere
+Stratosphere
+Ozone layer
+2
+What is the kelvin temperature scale based off of?
+The temperature of the sun
+The temperature of the space
+The temperature to stop atoms
+The temperature of a nuclear reaction
+3
+What 3 genres is William Shakespeare known for?
+Tragedies, Romances and Thrillers
+Tragedies, Romances and Comedies
+Tragedies, Romances and Philosophy
+Tragedies, Romances and Horror
+2
+Which of these real people can be classified as a tragic hero?
+Donald Trump
+Martin Luther King
+Jimmy Donaldson (MrBeast)
+Elon Musk
+2
+What does BMI stand for?
+Body Mass Index
+Basic Metabolic Indicator
+Balanced Macronutrient Intake
+Blood-Muscle Interactions
+1
+Which of these is NOT a real vitamin?
+Vitamin A
+Vitamin B
+Vitamin C
+Vitamin D
+2
+Which of the following are the definitions of black box testing?
+Each pathway in a module is tested
+Only the inputs are tested with expected outcomes
+Testing the program on various OS's and hardware
+Releasing the program to a small user base and collecting errors
+2
+In Screen designs what is the most important practice for colour blind accessibility?
+Avoiding convoluted animations
+Have colour blind setting available
+Allow alt text for all images
+Obey WCAG guidelines
+4
+What development approach was most likely used to develop this project?
+Structured approach
+RAD approach
+End user approach
+Agile approach
+3
+What is the first unit used in the CPU Instruction Cycle?
+RAM
+Program Counter
+Decoder
+Instruction Register
+1
+Which of these number types are commonly used in various image formats?
+Denary
+Binary
+Hexadecimal
+Octal
+3
+What is 1000 0000 + 1100 0000 In denary?
+1
+2
+3
+4
+4
+Who Created dy/dx notation?
+Gottfried Leibniz
+Issac Newton
+René Descartes
+Sheldon Cooper
+1
+Which number is closest to Euler's number?
+2.69
+2.71
+2.72
+2.7
+3
+When is the speed of light not approximately 299,792,458m/s?
+In a vacuum
+In cosmic background radiation
+In air
+In the earth’s exosphere
+3
+What do we call the study of how objects move when we apply forces to them?
+Kinematics
+Dynamics
+Newtonian physics
+Mechanics
+2
+Which of the following is not a Theme in literature?
+Romance
+Gender Roles
+Racial Prejudice
+Hierarchy
+1
+In Shakespeare's "Hamlet," what technique is used in Hamlet's speech "To be, or not to be, that is the question"?
+Metonymy
+Synecdoche
+Juxtaposition
+Antithesis
+4
+One standard vape pod has about 40 mg of nicotine which is equivalent to how many Cigarettes?
+20 Cigarettes worth
+18 Cigarettes worth
+12 Cigarettes worth
+14 Cigarettes worth
+1
+Which of these drugs has the highest drug schedule?
+Marijuana
+Ketamine
+Cocaine
+Opium
+1
