@@ -11,6 +11,8 @@ public class TileScript : MonoBehaviour
     [SerializeField] private Sprite bombTile;
     [SerializeField] private Light2D tileLight;
     [SerializeField] private GameObject tileLightObjRef;
+    [SerializeField] private ParticleSystem ribbonParticles;
+    [SerializeField] private ParticleSystem ribbonParticlesDeath;
 
     GameManager gameManagerRef;
     Animator cameraShake;
@@ -87,14 +89,20 @@ public class TileScript : MonoBehaviour
         spriteRenderer.material.SetColor("_Color", defaultColor);
     }
 
-    public void ChangeSprite(int state) {
+    public void ChangeSprite(int state, bool ribbonEffects) {
         if (state == 0) {
             // If the tile has a bomb, then change to bomb sprite
+            if (ribbonEffects) {
+                ribbonParticlesDeath.Play();
+            }
             spriteRenderer.sprite = bombTile;
-            tileLight.color = Color.red;
-            tileLight.intensity = 5f;
+            tileLight.color = Color.white;
+            tileLight.intensity = 1.5f;
             tileLightObjRef.SetActive(true);
         } else if (state == 1) {
+            if (ribbonEffects) {
+                ribbonParticles.Play();
+            }
             spriteRenderer.sprite = revealedTiles[StaticData.tileArr[tileRow, tileCol].bombsAdjacent];
             tileLight.color = Color.white;
             tileLight.intensity = 0.15f;
