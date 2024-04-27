@@ -179,15 +179,11 @@ public class GameManager : MonoBehaviour
 
                 // Check the TileScript ChangeSprite() function for more info
                 if (selectedTile.revealed) {
-                    if (selectedTile.hasBomb) {
-                        selectedTileObj.ChangeSprite(0);
-                    } else {
-                        selectedTileObj.ChangeSprite(1);
-                    }
+                    selectedTileObj.ChangeSprite(1, false);
                 } else if (selectedTile.flagged) {
-                    selectedTileObj.ChangeSprite(2);
+                    selectedTileObj.ChangeSprite(2, false);
                 } else {
-                    selectedTileObj.ChangeSprite(3);
+                    selectedTileObj.ChangeSprite(3, false);
                 }
             }
         }
@@ -307,7 +303,7 @@ public class GameManager : MonoBehaviour
         }
 
         if (selectedTile.hasBomb) {
-            selectedTileObj.ChangeSprite(0);
+            selectedTileObj.ChangeSprite(0, true);
 
             FindObjectOfType<AudioManager>().PlaySound("Boom");
 
@@ -320,7 +316,7 @@ public class GameManager : MonoBehaviour
 
             StartCoroutine(RevealBombs());
         } else {
-            selectedTileObj.ChangeSprite(1);
+            selectedTileObj.ChangeSprite(1 ,true);
             if (selectedTile.bombsAdjacent == 0) {
                 OpenAdjTiles(tileRow, tileCol);
             }
@@ -337,10 +333,10 @@ public class GameManager : MonoBehaviour
 
         if (selectedTile.flagged) {
             StaticData.noOfFlags += 1;
-            selectedTileObj.ChangeSprite(2);
+            selectedTileObj.ChangeSprite(2, false);
         } else {
             StaticData.noOfFlags -= 1;
-            selectedTileObj.ChangeSprite(3);
+            selectedTileObj.ChangeSprite(3, false);
         }
 
         FlaggedInfoText.text = "Flagged: " + StaticData.noOfFlags.ToString();
@@ -403,7 +399,7 @@ public class GameManager : MonoBehaviour
                             if (!selectedTile.flagged) {
                                 StaticData.noOfFlags += 1;
                                 selectedTile.flagged = true;
-                                selectedTileObj.ChangeSprite(2);
+                                selectedTileObj.ChangeSprite(2, false);
                             }
                         }
                     }
@@ -499,14 +495,16 @@ public class GameManager : MonoBehaviour
     public IEnumerator RevealBombs() {
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
-                if (StaticData.tileArr[row, col].hasBomb && !StaticData.tileArr[row, col].flagged) {
-                    yield return new WaitForSeconds(0.5f);
-                    tileObjRef[row, col].ChangeSprite(0);
-                    FindObjectOfType<AudioManager>().PlaySound("Boom");
-                } else if (!StaticData.tileArr[row, col].hasBomb && StaticData.tileArr[row, col].flagged) {
-                    yield return new WaitForSeconds(0.5f);
-                    tileObjRef[row, col].ChangeSprite(3);
-                    FindObjectOfType<AudioManager>().PlaySound("Flag");
+                if (!StaticData.tileArr[row, col].revealed) {
+                    if (StaticData.tileArr[row, col].hasBomb && !StaticData.tileArr[row, col].flagged) {
+                        yield return new WaitForSeconds(0.5f);
+                        tileObjRef[row, col].ChangeSprite(0, true);
+                        FindObjectOfType<AudioManager>().PlaySound("Boom");
+                    } else if (!StaticData.tileArr[row, col].hasBomb && StaticData.tileArr[row, col].flagged) {
+                        yield return new WaitForSeconds(0.5f);
+                        tileObjRef[row, col].ChangeSprite(3, false);
+                        FindObjectOfType<AudioManager>().PlaySound("Flag");
+                    }
                 }
             }
         }
