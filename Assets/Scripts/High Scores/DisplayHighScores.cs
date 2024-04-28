@@ -4,7 +4,7 @@ using System.IO;
 
 public class HighScores : MonoBehaviour
 {
-    [SerializeField] private TMP_Text[] QuestionRespText;
+    [SerializeField] private TMP_Text[] HighScoreText;
 
     // Start is called before the first frame update
     void Start()
@@ -12,17 +12,21 @@ public class HighScores : MonoBehaviour
         string path = Application.dataPath + "/HighScores.txt";
 
         if (!File.Exists(path)) {
-            File.WriteAllText(path, "");
+            using (StreamWriter writer = new StreamWriter(path, false)) { 
+                for (int i = 0; i < 5; i++) {
+                    writer.WriteLine(-1);
+                }
+            }
         }
 
         Random.InitState((int) System.DateTime.Now.Ticks);
 
-        using (StreamReader read = new StreamReader(path)) {
+        using (StreamReader reader = new StreamReader(path)) {
             for (int i = 0; i < 5; i++) {
-                string time = read.ReadLine();
+                string time = reader.ReadLine();
                 
                 if (time == "-1") {
-                    QuestionRespText[i].text = (i + 1).ToString() + ". NA";
+                    HighScoreText[i].text = (i + 1).ToString() + ". NA";
                 } else {
                     float timeAsFloat = float.Parse(time);
 
@@ -30,15 +34,9 @@ public class HighScores : MonoBehaviour
 
                     int minutes = roundedTimer / 60;
                     int seconds = roundedTimer % 60;
-                    QuestionRespText[i].text = minutes.ToString() + "MIN " + seconds.ToString() + "S";
+                    HighScoreText[i].text = (i + 1).ToString() + ". " + minutes.ToString() + "MIN " + seconds.ToString() + "S";
                 }
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

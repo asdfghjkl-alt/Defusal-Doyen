@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     // Specifies how many bombs are to be placed on the board
     private int noOfBombs;
     public bool stopInteraction;
+    bool endedGame = false;
 
     // Variable to track if the user is using the "Antibomb"
     [HideInInspector] public bool usingAntiBomb = false;
@@ -77,7 +78,6 @@ public class GameManager : MonoBehaviour
             StaticData.timer = 0;
             StaticData.won = false;
             StaticData.noOfFlags = 0;
-            StaticData.endedGame = false;
         }
 
         // Creating the board
@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
 
     // This is a default function in unity that calls once every 0.02s
     void FixedUpdate() {
-        if (!StaticData.endedGame){
+        if (endedGame){
             StaticData.timer += Time.fixedDeltaTime;
             // Updating the timer
 
@@ -308,7 +308,7 @@ public class GameManager : MonoBehaviour
             FindObjectOfType<AudioManager>().PlaySound("Boom");
 
             stopInteraction = true;
-            StaticData.endedGame = true;
+            endedGame = true;
 
             for (int i = 0; i < 3; i++) {
                 PowerUpButtons[i].interactable = false;
@@ -367,7 +367,7 @@ public class GameManager : MonoBehaviour
 
         if (StaticData.won) {
             stopInteraction = true;
-            StaticData.endedGame = true;
+            endedGame = true;
 
             for (int i = 0; i < 3; i++) {
                 PowerUpButtons[i].interactable = false;
