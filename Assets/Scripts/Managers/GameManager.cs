@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
 
     // This is a default function in unity that calls once every 0.02s
     void FixedUpdate() {
-        if (endedGame){
+        if (!endedGame){
             StaticData.timer += Time.fixedDeltaTime;
             // Updating the timer
 

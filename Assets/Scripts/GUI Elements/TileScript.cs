@@ -68,7 +68,7 @@ public class TileScript : MonoBehaviour
                             if (!StaticData.won) {
                                 Random.InitState((int)System.DateTime.Now.Ticks);
 
-                                int RandomChance = Random.Range(0, 4);
+                                int RandomChance = Random.Range(0, 5);
 
                                 if (RandomChance == 0) {
                                     StartCoroutine(gameManagerRef.Questioning());
