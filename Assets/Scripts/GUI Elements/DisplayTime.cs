@@ -19,10 +19,4 @@ public class DisplayTime : MonoBehaviour
         // Displaying the minutes and seconds
         timerText.text = minutes.ToString() + "MIN " + seconds.ToString() + "S";
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

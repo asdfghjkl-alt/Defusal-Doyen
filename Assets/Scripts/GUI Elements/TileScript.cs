@@ -11,6 +11,8 @@ public class TileScript : MonoBehaviour
     [SerializeField] private Sprite bombTile;
     [SerializeField] private Light2D tileLight;
     [SerializeField] private GameObject tileLightObjRef;
+    [SerializeField] private GameObject tileLightHoverRef;
+    [SerializeField] private Light2D tileLightHover;
     [SerializeField] private ParticleSystem ribbonParticles;
     [SerializeField] private ParticleSystem ribbonParticlesDeath;
 
@@ -24,8 +26,7 @@ public class TileScript : MonoBehaviour
     [HideInInspector] public SpriteRenderer spriteRenderer; // Component to allow changing sprites
 
     Color defaultColor = new Color(1f, 1f, 1f);
-    Color highlightedColor = new Color(0.7f, 0.7f, 0.7f);
-    Color powerUpUseColor = new Color(0, 0, 1f);
+    Color highlightedColor = new Color(0.4f, 0.4f, 1f);
 
     // Start is called before the first frame update
     void Start()
@@ -39,10 +40,17 @@ public class TileScript : MonoBehaviour
 
         if (!gameManagerRef.stopInteraction) {
             if (!infoOnTile.revealed) {
+                spriteRenderer.material.SetColor("_Color", highlightedColor);
+                tileLightHoverRef.SetActive(true);
+
                 if (gameManagerRef.usingAntiBomb) {
-                    spriteRenderer.material.SetColor("_Color", powerUpUseColor);
+                    tileLightHover.falloffIntensity = 0;
+                    tileLightHover.shapeLightFalloffSize = 1.3f;
+                    tileLightHover.intensity = 10f;
                 } else {
-                    spriteRenderer.material.SetColor("_Color", highlightedColor);
+                    tileLightHover.shapeLightFalloffSize = 2;
+                    tileLightHover.falloffIntensity = 1;
+                    tileLightHover.intensity = 3f;
                 }
             }
 
@@ -68,7 +76,7 @@ public class TileScript : MonoBehaviour
                             if (!StaticData.won) {
                                 Random.InitState((int)System.DateTime.Now.Ticks);
 
-                                int RandomChance = Random.Range(0, 4);
+                                int RandomChance = Random.Range(0, 5);
 
                                 if (RandomChance == 0) {
                                     StartCoroutine(gameManagerRef.Questioning());
@@ -86,6 +94,7 @@ public class TileScript : MonoBehaviour
     }
 
     private void OnMouseExit() {
+        tileLightHoverRef.SetActive(false);
         spriteRenderer.material.SetColor("_Color", defaultColor);
     }
 

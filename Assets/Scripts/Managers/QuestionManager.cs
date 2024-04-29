@@ -35,14 +35,14 @@ public class QuestionManager : MonoBehaviour
 
         Random.InitState((int) System.DateTime.Now.Ticks);
 
-        using (StreamReader read = new StreamReader(path)) {
+        using (StreamReader reader = new StreamReader(path)) {
             for (int i = 0; i < 44; i++) {
-                QuestionDesc[i] = read.ReadLine();
+                QuestionDesc[i] = reader.ReadLine();
 
                 for (int j = 0; j < 4; j++) {
-                    QuestionResp[i, j] = read.ReadLine();
+                    QuestionResp[i, j] = reader.ReadLine();
                 }
-                CorrectQuestionResp[i] = System.Int32.Parse(read.ReadLine());
+                CorrectQuestionResp[i] = int.Parse(reader.ReadLine());
                 CorrectQuestionResp[i] -= 1;
             }
         }

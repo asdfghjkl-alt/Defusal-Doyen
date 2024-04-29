@@ -11,5 +11,4 @@ public class StaticData : MonoBehaviour
     public static bool userFirstInput = false;
     public static int[] PowerUpNo = new int[3];
     public static bool won = false;
-    public static bool endedGame = false;
 }
