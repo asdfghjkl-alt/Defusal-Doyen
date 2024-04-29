@@ -12,6 +12,7 @@ public class TileScript : MonoBehaviour
     [SerializeField] private Light2D tileLight;
     [SerializeField] private GameObject tileLightObjRef;
     [SerializeField] private GameObject tileLightHoverRef;
+    [SerializeField] private Light2D tileLightHover;
     [SerializeField] private ParticleSystem ribbonParticles;
     [SerializeField] private ParticleSystem ribbonParticlesDeath;
 
@@ -41,6 +42,16 @@ public class TileScript : MonoBehaviour
             if (!infoOnTile.revealed) {
                 spriteRenderer.material.SetColor("_Color", highlightedColor);
                 tileLightHoverRef.SetActive(true);
+
+                if (gameManagerRef.usingAntiBomb) {
+                    tileLightHover.falloffIntensity = 0;
+                    tileLightHover.shapeLightFalloffSize = 1.3f;
+                    tileLightHover.intensity = 10f;
+                } else {
+                    tileLightHover.shapeLightFalloffSize = 2;
+                    tileLightHover.falloffIntensity = 1;
+                    tileLightHover.intensity = 3f;
+                }
             }
 
             if (Input.GetMouseButtonDown(0)) { // This means they left clicked a tile
