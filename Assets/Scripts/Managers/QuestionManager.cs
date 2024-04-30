@@ -77,8 +77,6 @@ public class QuestionManager : MonoBehaviour
             QuestionRespBtn[i].interactable = false;
         }
 
-        Random.InitState((int) System.DateTime.Now.Ticks);
-
         if (index == CorrectQuestionResp[QuestionNum]) {
             StaticData.PowerUpNo[Random.Range(0, 3)] += 1;
             CorrectScreen.SetActive(true);

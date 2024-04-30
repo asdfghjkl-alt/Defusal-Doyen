@@ -26,8 +26,8 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(waitLoadingScene("High Scores"));
     }
 
-    public void GoToHelp() {
-        StartCoroutine(waitLoadingScene("Help"));
+    public void GoToTutorial() {
+        StartCoroutine(waitLoadingScene("Tutorial"));
     }
 
     public void GoToHome() {

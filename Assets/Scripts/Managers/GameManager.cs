@@ -64,8 +64,6 @@ public class GameManager : MonoBehaviour
         noOfBombs = 30;
 
         NumberOfBombsText.text = "Total Bombs: " + noOfBombs;
-
-        Random.InitState((int) System.DateTime.Now.Ticks);
         
         // Allows the program to control the sprites of tiles
         tileObjRef = new TileScript[width, height];
@@ -94,7 +92,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < 3; i++) {
             if (StaticData.reset) {
                 // If game is to be reset, powerups user has should be 0
-                StaticData.PowerUpNo[i] = 1;
+                StaticData.PowerUpNo[i] = 0;
             }
             // Displaying how many powerups the user has on screen
             PowerUpNoText[i].text = StaticData.PowerUpNo[i].ToString() + "x";
@@ -191,6 +189,8 @@ public class GameManager : MonoBehaviour
 
     void SetMines() {
         // Note: Mines are set AFTER first click
+
+        Random.InitState((int) System.DateTime.Now.Ticks);
 
         int bombsPlaced = 0;
         // Keeps track of how many mines are set
