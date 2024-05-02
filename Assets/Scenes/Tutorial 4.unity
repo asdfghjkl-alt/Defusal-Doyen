@@ -445,7 +445,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 540, y: 400}
+  m_SizeDelta: {x: 540, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &233013005
 MonoBehaviour:
@@ -470,7 +470,7 @@ MonoBehaviour:
   m_text: "You will be prompted with a question by the guardian of the temple. \n\nThe
     countdown will be 15 seconds for every question, with 4 possible responses to
     each question (Left click on response boxes to choose your answer)\n\nYou will
-    be gifted a powerup if you get the question right!"
+    be gifted multiple powerup if you get the question right!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
