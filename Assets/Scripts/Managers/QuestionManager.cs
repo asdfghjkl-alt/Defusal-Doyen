@@ -80,7 +80,7 @@ public class QuestionManager : MonoBehaviour
         Random.InitState((int) System.DateTime.Now.Ticks);
 
         if (index == CorrectQuestionResp[QuestionNum]) {
-            int numOfGiftedPs = Random.Range(1, 4);
+            int numOfGiftedPs = Random.Range(1, 5);
 
             Debug.Log(numOfGiftedPs);
 

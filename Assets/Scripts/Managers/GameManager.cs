@@ -83,8 +83,8 @@ public class GameManager : MonoBehaviour
         // Code to display how many of each powerup the user has
         for (int i = 0; i < 3; i++) {
             if (StaticData.reset) {
-                // If game is to be reset, powerups user has should be 0
-                StaticData.PowerUpNo[i] = 0;
+                // If game is to be reset, powerups user has should be 1
+                StaticData.PowerUpNo[i] = 1;
             }
             // Displaying how many powerups the user has on screen
             PowerUpNoText[i].text = StaticData.PowerUpNo[i].ToString() + "x";
@@ -428,7 +428,7 @@ public class GameManager : MonoBehaviour
             int tileRow = 0;
             int tileCol = 0;
 
-            while (bombsFlagged < 2 && tileRow < height) {
+            while (bombsFlagged < 3 && tileRow < height) {
                 if (StaticData.tileArr[tileRow, tileCol].hasBomb && !StaticData.tileArr[tileRow, tileCol].flagged) {
                     FlagTile(tileRow, tileCol);
 
