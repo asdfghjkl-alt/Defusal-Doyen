@@ -80,12 +80,14 @@ public class QuestionManager : MonoBehaviour
         Random.InitState((int) System.DateTime.Now.Ticks);
 
         if (index == CorrectQuestionResp[QuestionNum]) {
-            int numOfGiftedPs = Random.Range(1, 5);
+            int numOfGiftedBombTest = Random.Range(1, 5);
 
-            Debug.Log(numOfGiftedPs);
+            StaticData.PowerUpNo[2] = numOfGiftedBombTest;
+
+            int numOfGiftedPs = Random.Range(1, 3);
 
             for (int i = 0; i < numOfGiftedPs; i++) {
-                StaticData.PowerUpNo[Random.Range(0, 3)] += 1;
+                StaticData.PowerUpNo[Random.Range(0, 2)] += 1;
             }
 
             CorrectScreen.SetActive(true);

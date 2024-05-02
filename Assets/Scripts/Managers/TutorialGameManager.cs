@@ -3,13 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
-
-// NOTE FOR WHOLE PROGRAM:
-// Defining "Class VariableName = some class" is by default a pointer in C#
-// E.g "TileData selectedTile = StaticData.tileArr[i, j];"
-// Changing the selectedTile will also change StaticData.tileArr[i, j]
-
-public class GameManager : MonoBehaviour
+public class TutorialGameManager : MonoBehaviour
 {
     // Object reference to spawn the tiles into the scene
     [SerializeField] private Transform tilePrefab;
@@ -27,34 +21,41 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text[] PowerUpNoText;
 
     // Text that allows the user to see how many bombs are correctly flagged (Defusing Report)
+    [SerializeField] private GameObject DefusingRepInfoText;
     [SerializeField] private TMP_Text FlaggedInfoText;
     [SerializeField] private TMP_Text NumberOfBombsText;
-    [SerializeField] private TMP_Text BombTestersUsedText;
 
     // To allow the program to disable the buttons while using "Antibomb"
     [SerializeField] private Button[] PowerUpButtons;
     [SerializeField] private Animator SceneTransition;
     [SerializeField] private Animator CameraShake;
-
-    [SerializeField] private int width;
-    [SerializeField] private int height;
-    [SerializeField] private int noOfBombs;
     
     // To allow for the code to change the tile sprites
     // based on tile information and user input
     public TileScript[,] tileObjRef;
 
-    [HideInInspector] public bool stopInteraction;
+    // Specifies how many tiles in 1 row
+    private int width;
+
+    // Specifies how many tiles in 1 column
+    private int height;
+
+    // Specifies how many bombs are to be placed on the board
+    private int noOfBombs;
+    public bool stopInteraction;
     bool endedGame = false;
 
     // Variable to track if the user is using the "Antibomb"
     [HideInInspector] public bool usingAntiBomb = false;
-    [HideInInspector] public int bombTestersUsed = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Creating a function to create an initial game board, input width: 15, height: 15, number of bombs: 30
+        // Creating a function to create an initial game board, input width: 15, height: 15, number of bombs: 35
+        
+        width = 15;
+        height = 15;
+        noOfBombs = 30;
 
         NumberOfBombsText.text = "Total Bombs: " + noOfBombs;
         
@@ -84,8 +85,8 @@ public class GameManager : MonoBehaviour
         // Code to display how many of each powerup the user has
         for (int i = 0; i < 3; i++) {
             if (StaticData.reset) {
-                // If game is to be reset, powerups user has should be 1
-                StaticData.PowerUpNo[i] = 1;
+                // If game is to be reset, powerups user has should be 0
+                StaticData.PowerUpNo[i] = 0;
             }
             // Displaying how many powerups the user has on screen
             PowerUpNoText[i].text = StaticData.PowerUpNo[i].ToString() + "x";
@@ -277,6 +278,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void OpenTile(int tileRow, int tileCol) {
+        DefusingRepInfoText.SetActive(false);
+        
         TileData selectedTile = StaticData.tileArr[tileRow, tileCol];
         TileScript selectedTileObj = tileObjRef[tileRow, tileCol];
 
@@ -317,6 +320,8 @@ public class GameManager : MonoBehaviour
     public void FlagTile(int tileRow, int tileCol) {
         TileData selectedTile = StaticData.tileArr[tileRow, tileCol];
         TileScript selectedTileObj = tileObjRef[tileRow, tileCol];
+
+        DefusingRepInfoText.SetActive(false);
 
         selectedTile.flagged = !selectedTile.flagged;
 
@@ -413,6 +418,8 @@ public class GameManager : MonoBehaviour
 
     public void UseBombFlagger() {
         if (StaticData.PowerUpNo[1] > 0) {
+            DefusingRepInfoText.SetActive(false);
+            
             StaticData.PowerUpNo[1] -= 1;
             FindObjectOfType<AudioManager>().PlaySound("Flag");
 
@@ -423,7 +430,7 @@ public class GameManager : MonoBehaviour
             int tileRow = 0;
             int tileCol = 0;
 
-            while (bombsFlagged < 3 && tileRow < height) {
+            while (bombsFlagged < 2 && tileRow < height) {
                 if (StaticData.tileArr[tileRow, tileCol].hasBomb && !StaticData.tileArr[tileRow, tileCol].flagged) {
                     FlagTile(tileRow, tileCol);
 
@@ -440,37 +447,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void BombTesterClicked() {
+    public void UseDefusingReport() {
         if (StaticData.PowerUpNo[2] > 0) {
+            int noOfBombsCorrectlyFlagged = 0;
+
             StaticData.PowerUpNo[2] -= 1;
 
             PowerUpNoText[2].text = StaticData.PowerUpNo[2].ToString() + "x";
 
-            bombTestersUsed += 1;
-
-            BombTestersUsedText.text = "Bomb Testers being used: " + bombTestersUsed.ToString();
-
-            for (int i = 0; i < 2; i++) {
-                PowerUpButtons[i].interactable = false;
+            for (int row = 0; row < height; row++) {
+                for (int col = 0; col < width; col++) {
+                    if (StaticData.tileArr[row, col].hasBomb && StaticData.tileArr[row, col].flagged) {
+                        noOfBombsCorrectlyFlagged += 1;
+                    }
+                }
             }
-        }
-    }
 
-    public void UseBombTester(int useRow, int useCol) {
-        bombTestersUsed -= 1;
+            DefusingRepInfoText.SetActive(true);
 
-        BombTestersUsedText.text = "Bomb Testers being used: " + bombTestersUsed.ToString();
+            TMP_Text tmpComponent = DefusingRepInfoText.GetComponent<TMP_Text>();
 
-        if (bombTestersUsed == 0) {
-            for (int i = 0; i < 3; i++) {
-                PowerUpButtons[i].interactable = true;
-            }
-        }
-
-        if (StaticData.tileArr[useRow, useCol].hasBomb) {
-            FlagTile(useRow, useCol);
-        } else {
-            OpenTile(useRow, useCol);
+            tmpComponent.text = "Bombs correctly flagged: " + noOfBombsCorrectlyFlagged.ToString();
         }
     }
 

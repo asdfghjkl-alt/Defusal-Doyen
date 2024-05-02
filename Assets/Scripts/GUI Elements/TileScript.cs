@@ -47,6 +47,11 @@ public class TileScript : MonoBehaviour
                     tileLightHover.falloffIntensity = 0;
                     tileLightHover.shapeLightFalloffSize = 1.3f;
                     tileLightHover.intensity = 10f;
+                } else if (gameManagerRef.bombTestersUsed > 0) {
+                    tileLightHover.color = Color.red;
+                    tileLightHover.shapeLightFalloffSize = 2;
+                    tileLightHover.falloffIntensity = 1;
+                    tileLightHover.intensity = 3f;
                 } else {
                     tileLightHover.shapeLightFalloffSize = 2;
                     tileLightHover.falloffIntensity = 1;
@@ -63,6 +68,8 @@ public class TileScript : MonoBehaviour
                         cameraShake.SetTrigger("Opened_Blank");
 
                         gameManagerRef.CheckWinCondition();
+                    } else if (gameManagerRef.bombTestersUsed > 0) {
+                        gameManagerRef.UseBombTester(tileRow, tileCol);
                     } else {
                         gameManagerRef.OpenTile(tileRow, tileCol); // Function to reveal the tile
                         
