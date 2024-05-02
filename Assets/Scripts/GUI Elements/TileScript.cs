@@ -76,9 +76,10 @@ public class TileScript : MonoBehaviour
                             if (!StaticData.won) {
                                 Random.InitState((int)System.DateTime.Now.Ticks);
 
-                                int RandomChance = Random.Range(0, 5);
+                                int RandomChance = Random.Range(0, 6);
+                                Debug.Log(RandomChance);
 
-                                if (RandomChance == 0) {
+                                if (RandomChance == 4) {
                                     StartCoroutine(gameManagerRef.Questioning());
                                 }
                             }
@@ -114,7 +115,7 @@ public class TileScript : MonoBehaviour
             }
             spriteRenderer.sprite = revealedTiles[StaticData.tileArr[tileRow, tileCol].bombsAdjacent];
             tileLight.color = Color.blue;
-            tileLight.intensity = 0.5f;
+            tileLight.intensity = 1f;
             tileLightObjRef.SetActive(true);
         } else if (state == 2) {
             spriteRenderer.sprite = flaggedTile;

@@ -38,6 +38,10 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void OpenTutorialPg(string index) {
+        StartCoroutine(waitLoadingScene("Tutorial " + index));
+    }
+
     public IEnumerator waitLoadingScene(string SceneName) {
         FindObjectOfType<AudioManager>().PlaySound("Click");
         SceneTransition.SetTrigger("Start");

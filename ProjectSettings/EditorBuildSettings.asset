@@ -23,4 +23,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/High Scores.unity
     guid: d4ecde18e30864a8d8ddabfdb1e1d088
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 9d1605c1f65624c12a2bc157a28be1c9
+  - enabled: 1
+    path: Assets/Scenes/Tutorial 1.unity
+    guid: 8d72b739be7174c1c910dcb90472c53b
+  - enabled: 1
+    path: Assets/Scenes/Tutorial 2.unity
+    guid: 4d3d869605af348bb90e8071fe2406e4
+  - enabled: 1
+    path: Assets/Scenes/Tutorial 4.unity
+    guid: eb82fd8048f634d1fb980f7fcfe58c65
+  - enabled: 1
+    path: Assets/Scenes/Tutorial 3.unity
+    guid: 92cef9699b0134a99b04d1e7acae948c
+  - enabled: 1
+    path: Assets/Scenes/Tutorial 5.unity
+    guid: d027e75362ff34320b0c06619a92d339
   m_configObjects: {}

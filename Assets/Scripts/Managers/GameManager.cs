@@ -35,20 +35,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button[] PowerUpButtons;
     [SerializeField] private Animator SceneTransition;
     [SerializeField] private Animator CameraShake;
+
+    [SerializeField] private int width;
+    [SerializeField] private int height;
+    [SerializeField] private int noOfBombs;
     
     // To allow for the code to change the tile sprites
     // based on tile information and user input
     public TileScript[,] tileObjRef;
 
-    // Specifies how many tiles in 1 row
-    private int width;
-
-    // Specifies how many tiles in 1 column
-    private int height;
-
-    // Specifies how many bombs are to be placed on the board
-    private int noOfBombs;
-    public bool stopInteraction;
+    [HideInInspector] public bool stopInteraction;
     bool endedGame = false;
 
     // Variable to track if the user is using the "Antibomb"
@@ -57,11 +53,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Creating a function to create an initial game board, input width: 15, height: 15, number of bombs: 35
-        
-        width = 15;
-        height = 15;
-        noOfBombs = 30;
+        // Creating a function to create an initial game board, input width: 15, height: 15, number of bombs: 30
 
         NumberOfBombsText.text = "Total Bombs: " + noOfBombs;
         

@@ -77,8 +77,17 @@ public class QuestionManager : MonoBehaviour
             QuestionRespBtn[i].interactable = false;
         }
 
+        Random.InitState((int) System.DateTime.Now.Ticks);
+
         if (index == CorrectQuestionResp[QuestionNum]) {
-            StaticData.PowerUpNo[Random.Range(0, 3)] += 1;
+            int numOfGiftedPs = Random.Range(1, 4);
+
+            Debug.Log(numOfGiftedPs);
+
+            for (int i = 0; i < numOfGiftedPs; i++) {
+                StaticData.PowerUpNo[Random.Range(0, 3)] += 1;
+            }
+
             CorrectScreen.SetActive(true);
             FindObjectOfType<AudioManager>().PlaySound("Correct");
         } else {
