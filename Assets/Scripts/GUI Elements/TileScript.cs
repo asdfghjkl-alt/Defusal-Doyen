@@ -50,12 +50,13 @@ public class TileScript : MonoBehaviour
                     tileLightHover.intensity = 10;
                 } else {
                     if (gameManagerRef.bombTestersUsed > 0) {
-                        tileLightHover.color = Color.red;
-                    } else {
                         tileLightHover.color = Color.green;
+                        tileLightHover.falloffIntensity = 0.2f;
+                    } else {
+                        tileLightHover.color = Color.red;
+                        tileLightHover.falloffIntensity = 0.3f;
                     }
                     tileLightHover.shapeLightFalloffSize = 2;
-                    tileLightHover.falloffIntensity = 0.3f;
                     tileLightHover.intensity = 3f;
                 }
             }
@@ -71,6 +72,10 @@ public class TileScript : MonoBehaviour
                         gameManagerRef.CheckWinCondition();
                     } else if (gameManagerRef.bombTestersUsed > 0) {
                         gameManagerRef.UseBombTester(tileRow, tileCol);
+
+                        if (!infoOnTile.flagged && infoOnTile.bombsAdjacent == 0) {
+                            cameraShake.SetTrigger("Opened_Blank");
+                        }
                     } else {
                         gameManagerRef.OpenTile(tileRow, tileCol); // Function to reveal the tile
                         

@@ -69,6 +69,10 @@ public class GameManager : MonoBehaviour
             StaticData.timer = 0;
             StaticData.won = false;
             StaticData.noOfFlags = 0;
+
+            for (int i = 0; i < 3; i++) {
+                PowerUpButtons[i].interactable = false;
+            }
         }
 
         // Creating the board
@@ -84,7 +88,7 @@ public class GameManager : MonoBehaviour
         // Code to display how many of each powerup the user has
         for (int i = 0; i < 3; i++) {
             if (StaticData.reset) {
-                // If game is to be reset, powerups user has should be 1
+                // If game is to be reset, powerups user has should be 0
                 StaticData.PowerUpNo[i] = 1;
             }
             // Displaying how many powerups the user has on screen
@@ -264,6 +268,10 @@ public class GameManager : MonoBehaviour
     }
 
     void OnFirstClick(int row, int col) {
+        for (int i = 0; i < 3; i++) {
+            PowerUpButtons[i].interactable = true;
+        }
+
         for (int i = row - 1; i <= row + 1; i++) {
             for (int j = col - 1; j <= col + 1; j++) {
                 if (isValidPos(i, j)) {
@@ -423,7 +431,7 @@ public class GameManager : MonoBehaviour
             int tileRow = 0;
             int tileCol = 0;
 
-            while (bombsFlagged < 3 && tileRow < height) {
+            while (bombsFlagged < 2 && tileRow < height) {
                 if (StaticData.tileArr[tileRow, tileCol].hasBomb && !StaticData.tileArr[tileRow, tileCol].flagged) {
                     FlagTile(tileRow, tileCol);
 
