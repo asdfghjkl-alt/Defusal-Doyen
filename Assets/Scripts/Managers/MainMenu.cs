@@ -10,11 +10,11 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
 
     public void Start() {
-        Screen.SetResolution( 1600, 900, FullScreenMode.Windowed);
+        Screen.SetResolution( 1920, 1080, FullScreenMode.Windowed);
  
         // Setting register for width and height of game.
-        PlayerPrefs.SetInt( "Screenmanager Resolution Width", 1600 );
-        PlayerPrefs.SetInt( "Screenmanager Resolution Width", 900 );
+        PlayerPrefs.SetInt( "Screenmanager Resolution Width", 1920 );
+        PlayerPrefs.SetInt( "Screenmanager Resolution Width", 1080 );
         PlayerPrefs.SetInt( "Screenmanager Fullscreen mode", (int)FullScreenMode.Windowed );
     }
 

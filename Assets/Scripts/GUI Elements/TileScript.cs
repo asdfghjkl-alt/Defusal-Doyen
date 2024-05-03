@@ -44,15 +44,17 @@ public class TileScript : MonoBehaviour
                 tileLightHoverRef.SetActive(true);
 
                 if (gameManagerRef.usingAntiBomb) {
+                    tileLightHover.color = Color.green;
                     tileLightHover.falloffIntensity = 0;
                     tileLightHover.shapeLightFalloffSize = 1.3f;
                     tileLightHover.intensity = 10f;
                 } else if (gameManagerRef.bombTestersUsed > 0) {
                     tileLightHover.color = Color.red;
                     tileLightHover.shapeLightFalloffSize = 2;
-                    tileLightHover.falloffIntensity = 1;
+                    tileLightHover.falloffIntensity = 0.3f;
                     tileLightHover.intensity = 3f;
                 } else {
+                    tileLightHover.color = Color.green;
                     tileLightHover.shapeLightFalloffSize = 2;
                     tileLightHover.falloffIntensity = 1;
                     tileLightHover.intensity = 3f;
@@ -83,7 +85,7 @@ public class TileScript : MonoBehaviour
                             if (!StaticData.won) {
                                 Random.InitState((int)System.DateTime.Now.Ticks);
 
-                                int RandomChance = Random.Range(0, 10);
+                                int RandomChance = Random.Range(0, 12);
                                 Debug.Log(RandomChance);
 
                                 if (RandomChance == 0) {
