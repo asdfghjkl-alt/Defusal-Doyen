@@ -44,10 +44,17 @@ public class TileScript : MonoBehaviour
                 tileLightHoverRef.SetActive(true);
 
                 if (gameManagerRef.usingAntiBomb) {
+                    tileLightHover.color = Color.green;
                     tileLightHover.falloffIntensity = 0;
                     tileLightHover.shapeLightFalloffSize = 1.3f;
                     tileLightHover.intensity = 10f;
+                } else if (gameManagerRef.bombTestersUsed > 0) {
+                    tileLightHover.color = Color.red;
+                    tileLightHover.shapeLightFalloffSize = 2;
+                    tileLightHover.falloffIntensity = 0.3f;
+                    tileLightHover.intensity = 3f;
                 } else {
+                    tileLightHover.color = Color.green;
                     tileLightHover.shapeLightFalloffSize = 2;
                     tileLightHover.falloffIntensity = 1;
                     tileLightHover.intensity = 3f;
@@ -63,6 +70,8 @@ public class TileScript : MonoBehaviour
                         cameraShake.SetTrigger("Opened_Blank");
 
                         gameManagerRef.CheckWinCondition();
+                    } else if (gameManagerRef.bombTestersUsed > 0) {
+                        gameManagerRef.UseBombTester(tileRow, tileCol);
                     } else {
                         gameManagerRef.OpenTile(tileRow, tileCol); // Function to reveal the tile
                         
@@ -76,7 +85,8 @@ public class TileScript : MonoBehaviour
                             if (!StaticData.won) {
                                 Random.InitState((int)System.DateTime.Now.Ticks);
 
-                                int RandomChance = Random.Range(0, 5);
+                                int RandomChance = Random.Range(0, 12);
+                                Debug.Log(RandomChance);
 
                                 if (RandomChance == 0) {
                                     StartCoroutine(gameManagerRef.Questioning());
@@ -106,7 +116,7 @@ public class TileScript : MonoBehaviour
             }
             spriteRenderer.sprite = bombTile;
             tileLight.color = Color.white;
-            tileLight.intensity = 1.5f;
+            tileLight.intensity = 0.5f;
             tileLightObjRef.SetActive(true);
         } else if (state == 1) {
             if (ribbonEffects) {
@@ -114,12 +124,12 @@ public class TileScript : MonoBehaviour
             }
             spriteRenderer.sprite = revealedTiles[StaticData.tileArr[tileRow, tileCol].bombsAdjacent];
             tileLight.color = Color.blue;
-            tileLight.intensity = 0.5f;
+            tileLight.intensity = 1f;
             tileLightObjRef.SetActive(true);
         } else if (state == 2) {
             spriteRenderer.sprite = flaggedTile;
             tileLight.color = new Color(0.1f, 0.5f, 1.0f);
-            tileLight.intensity = 5f;
+            tileLight.intensity = 2f;
             tileLightObjRef.SetActive(true);
         } else {
             spriteRenderer.sprite = unrevealedTile;
