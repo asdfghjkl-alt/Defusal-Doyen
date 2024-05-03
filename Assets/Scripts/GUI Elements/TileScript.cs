@@ -47,16 +47,15 @@ public class TileScript : MonoBehaviour
                     tileLightHover.color = Color.green;
                     tileLightHover.falloffIntensity = 0;
                     tileLightHover.shapeLightFalloffSize = 1.3f;
-                    tileLightHover.intensity = 10f;
-                } else if (gameManagerRef.bombTestersUsed > 0) {
-                    tileLightHover.color = Color.red;
+                    tileLightHover.intensity = 10;
+                } else {
+                    if (gameManagerRef.bombTestersUsed > 0) {
+                        tileLightHover.color = Color.red;
+                    } else {
+                        tileLightHover.color = Color.green;
+                    }
                     tileLightHover.shapeLightFalloffSize = 2;
                     tileLightHover.falloffIntensity = 0.3f;
-                    tileLightHover.intensity = 3f;
-                } else {
-                    tileLightHover.color = Color.green;
-                    tileLightHover.shapeLightFalloffSize = 2;
-                    tileLightHover.falloffIntensity = 1;
                     tileLightHover.intensity = 3f;
                 }
             }
