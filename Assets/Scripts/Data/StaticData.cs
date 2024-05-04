@@ -9,6 +9,6 @@ public class StaticData : MonoBehaviour
     public static int noOfFlags = 0;
     public static TileData[,] tileArr;
     public static bool userFirstInput = false;
-    public static int[] PowerUpNo = new int[3];
+    public static int[] PowerUpNo = new int[4];
     public static bool won = false;
 }

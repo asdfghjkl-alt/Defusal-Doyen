@@ -90,6 +90,10 @@ public class QuestionManager : MonoBehaviour
                 StaticData.PowerUpNo[Random.Range(0, 2)] += 1;
             }
 
+            if (Random.Range(0, 5) == 0) {
+                StaticData.PowerUpNo[4] += 1;
+            }
+
             CorrectScreen.SetActive(true);
             FindObjectOfType<AudioManager>().PlaySound("Correct");
         } else {
@@ -104,10 +108,10 @@ public class QuestionManager : MonoBehaviour
 
         QuestionBtnBg[CorrectQuestionResp[QuestionNum]].color = Color.green;
 
-        StartCoroutine(waiting());
+        StartCoroutine(Waiting());
     }
 
-    public IEnumerator waiting() {
+    public IEnumerator Waiting() {
         yield return new WaitForSeconds(1f);
 
         SceneTransition.SetTrigger("Start");

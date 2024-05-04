@@ -40,24 +40,19 @@ public class TileScript : MonoBehaviour
 
         if (!gameManagerRef.stopInteraction) {
             if (!infoOnTile.revealed) {
-                spriteRenderer.material.SetColor("_Color", highlightedColor);
-                tileLightHoverRef.SetActive(true);
-
+                
+                if (!gameManagerRef.usingPlaneCho) {
+                    spriteRenderer.material.SetColor("_Color", highlightedColor);
+                }
+                
                 if (gameManagerRef.usingAntiBomb) {
-                    tileLightHover.color = Color.green;
-                    tileLightHover.falloffIntensity = 0;
-                    tileLightHover.shapeLightFalloffSize = 1.3f;
-                    tileLightHover.intensity = 10;
+                    ChangeTileLight(Color.green, 0, 1.3f, 10);
+                } else if (gameManagerRef.usingPlaneCho) {
+                    gameManagerRef.ChangeColLights(tileCol, true);
+                } else if (gameManagerRef.bombTestersUsed > 0) {
+                    ChangeTileLight(Color.green, 0.2f, 2, 3);
                 } else {
-                    if (gameManagerRef.bombTestersUsed > 0) {
-                        tileLightHover.color = Color.green;
-                        tileLightHover.falloffIntensity = 0.2f;
-                    } else {
-                        tileLightHover.color = Color.red;
-                        tileLightHover.falloffIntensity = 0.3f;
-                    }
-                    tileLightHover.shapeLightFalloffSize = 2;
-                    tileLightHover.intensity = 3f;
+                    ChangeTileLight(Color.red, 0.3f, 2, 3);
                 }
             }
 
@@ -76,6 +71,9 @@ public class TileScript : MonoBehaviour
                         if (!infoOnTile.flagged && infoOnTile.bombsAdjacent == 0) {
                             cameraShake.SetTrigger("Opened_Blank");
                         }
+                    } else if (gameManagerRef.usingPlaneCho) {
+                        gameManagerRef.UsePlaneCho(tileCol);
+                        cameraShake.SetTrigger("Opened_Blank");
                     } else {
                         gameManagerRef.OpenTile(tileRow, tileCol); // Function to reveal the tile
                         
@@ -90,7 +88,6 @@ public class TileScript : MonoBehaviour
                                 Random.InitState((int)System.DateTime.Now.Ticks);
 
                                 int RandomChance = Random.Range(0, 12);
-                                Debug.Log(RandomChance);
 
                                 if (RandomChance == 0) {
                                     StartCoroutine(gameManagerRef.Questioning());
@@ -107,12 +104,31 @@ public class TileScript : MonoBehaviour
         }
     }
 
-    private void OnMouseExit() {
+    public void ChangeTileLight(Color lightColor, float lightFOIntensity, float lightFalloffSize, float lightIntensity) {
+        tileLightHoverRef.SetActive(true);
+        tileLightHover.color = lightColor;
+        tileLightHover.falloffIntensity = lightFOIntensity;
+        tileLightHover.shapeLightFalloffSize = lightFalloffSize;
+        tileLightHover.intensity = lightIntensity;
+    }
+
+    public void OnMouseExit() {
+        if (gameManagerRef.usingPlaneCho) {
+            gameManagerRef.ChangeColLights(tileCol, false);
+        } else {
+            ReturnTileNormal();
+        }
+    }
+
+    public void ReturnTileNormal() {
         tileLightHoverRef.SetActive(false);
         spriteRenderer.material.SetColor("_Color", defaultColor);
     }
 
     public void ChangeSprite(int state, bool ribbonEffects) {
+        tileLightHoverRef.SetActive(false);
+        spriteRenderer.material.SetColor("_Color", defaultColor);
+
         if (state == 0) {
             // If the tile has a bomb, then change to bomb sprite
             if (ribbonEffects) {

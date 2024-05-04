@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     // Variable to track if the user is using the "Antibomb"
     [HideInInspector] public bool usingAntiBomb = false;
+    [HideInInspector] public bool usingPlaneCho = false;
     [HideInInspector] public int bombTestersUsed = 0;
 
     // Start is called before the first frame update
@@ -70,7 +71,7 @@ public class GameManager : MonoBehaviour
             StaticData.won = false;
             StaticData.noOfFlags = 0;
 
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4; i++) {
                 PowerUpButtons[i].interactable = false;
             }
         }
@@ -86,10 +87,14 @@ public class GameManager : MonoBehaviour
         }
 
         // Code to display how many of each powerup the user has
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             if (StaticData.reset) {
-                // If game is to be reset, powerups user has should be 0
-                StaticData.PowerUpNo[i] = 1;
+                // If game is to be reset, powerups user has should be 1
+                if (i == 3) {
+                    StaticData.PowerUpNo[i] = 1;
+                } else {
+                    StaticData.PowerUpNo[i] = 1;
+                }
             }
             // Displaying how many powerups the user has on screen
             PowerUpNoText[i].text = StaticData.PowerUpNo[i].ToString() + "x";
@@ -268,7 +273,7 @@ public class GameManager : MonoBehaviour
     }
 
     void OnFirstClick(int row, int col) {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             PowerUpButtons[i].interactable = true;
         }
 
@@ -309,7 +314,7 @@ public class GameManager : MonoBehaviour
             stopInteraction = true;
             endedGame = true;
 
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4; i++) {
                 PowerUpButtons[i].interactable = false;
             }
 
@@ -366,7 +371,7 @@ public class GameManager : MonoBehaviour
             stopInteraction = true;
             endedGame = true;
 
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4; i++) {
                 PowerUpButtons[i].interactable = false;
             }
 
@@ -379,7 +384,7 @@ public class GameManager : MonoBehaviour
     public void UseAntiBomb(int useRow, int useCol) {
         usingAntiBomb = false;
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             PowerUpButtons[i].interactable = true;
         }
 
@@ -413,7 +418,7 @@ public class GameManager : MonoBehaviour
 
             usingAntiBomb = true;
 
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4; i++) {
                 PowerUpButtons[i].interactable = false;
             }
         }
@@ -461,6 +466,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < 2; i++) {
                 PowerUpButtons[i].interactable = false;
             }
+            PowerUpButtons[3].interactable = false;
         }
     }
 
@@ -470,7 +476,7 @@ public class GameManager : MonoBehaviour
         BombTestersUsedText.text = "Bomb Testers being used: " + bombTestersUsed.ToString();
 
         if (bombTestersUsed == 0) {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4; i++) {
                 PowerUpButtons[i].interactable = true;
             }
         }
@@ -482,11 +488,46 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void PlaneChoClicked() {
+        if (StaticData.PowerUpNo[3] > 0) {
+            StaticData.PowerUpNo[3] -= 1;
+
+            PowerUpNoText[3].text = StaticData.PowerUpNo[3].ToString() + "x";
+
+            usingPlaneCho = true;
+
+            for (int i = 0; i < 4; i++) {
+                PowerUpButtons[i].interactable = false;
+            }
+        }
+    }
+
+    public void UsePlaneCho(int useCol) {
+        
+        for (int i = 0; i < 4; i++) {
+            PowerUpButtons[i].interactable = true;
+        }
+
+        usingPlaneCho = false;
+
+        for (int row = 0; row < height; row++) {
+            TileData selectedTile = StaticData.tileArr[row, useCol];
+
+            if (!selectedTile.revealed) {
+                if (selectedTile.hasBomb) {
+                    FlagTile(row, useCol);
+                } else {
+                    OpenTile(row, useCol);
+                }
+            }
+        }
+    }
+
     public IEnumerator Questioning() {
         StaticData.reset = false;
         stopInteraction = true;
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             PowerUpButtons[i].interactable = true;
         }
 
@@ -532,5 +573,21 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         SceneManager.LoadScene("End Game Win");
+    }
+
+    public void ChangeColLights(int useCol, bool turnOn) {
+        if (turnOn) {
+            for (int row = 0; row < height; row++) {
+                if (!StaticData.tileArr[row, useCol].revealed) {
+                    tileObjRef[row, useCol].ChangeTileLight(Color.green, 0.9f, 2, 3);
+                }
+            }
+        } else {
+            for (int row = 0; row < height; row++) {
+                if (!StaticData.tileArr[row, useCol].revealed) {
+                    tileObjRef[row, useCol].ReturnTileNormal();
+                }
+            }
+        }
     }
 }
