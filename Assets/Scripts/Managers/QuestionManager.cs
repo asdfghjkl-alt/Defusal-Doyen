@@ -90,8 +90,8 @@ public class QuestionManager : MonoBehaviour
                 StaticData.PowerUpNo[Random.Range(0, 2)] += 1;
             }
 
-            if (Random.Range(0, 5) == 0) {
-                StaticData.PowerUpNo[4] += 1;
+            if (Random.Range(0, 3) == 0) {
+                StaticData.PowerUpNo[3] += 1;
             }
 
             CorrectScreen.SetActive(true);

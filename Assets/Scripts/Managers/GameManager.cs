@@ -90,11 +90,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < 4; i++) {
             if (StaticData.reset) {
                 // If game is to be reset, powerups user has should be 1
-                if (i == 3) {
-                    StaticData.PowerUpNo[i] = 1;
-                } else {
-                    StaticData.PowerUpNo[i] = 1;
-                }
+                StaticData.PowerUpNo[i] = 1;
             }
             // Displaying how many powerups the user has on screen
             PowerUpNoText[i].text = StaticData.PowerUpNo[i].ToString() + "x";
