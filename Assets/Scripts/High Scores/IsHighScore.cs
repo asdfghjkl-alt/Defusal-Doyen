@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.IO;
-using System.Runtime.CompilerServices;
 
 public class IsHighScore : MonoBehaviour
 {

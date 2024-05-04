@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO.Compression;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -88,7 +87,7 @@ public class TileScript : MonoBehaviour
                             if (!StaticData.won) {
                                 Random.InitState((int)System.DateTime.Now.Ticks);
 
-                                int RandomChance = Random.Range(0, 10);
+                                int RandomChance = Random.Range(0, 12);
 
                                 if (RandomChance == 0) {
                                     StartCoroutine(gameManagerRef.Questioning());

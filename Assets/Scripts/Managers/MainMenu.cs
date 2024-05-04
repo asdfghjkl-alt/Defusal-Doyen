@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,12 +9,11 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
 
     public void Start() {
-        Screen.SetResolution( 1920, 1080, FullScreenMode.Windowed);
- 
-        // Setting register for width and height of game.
-        PlayerPrefs.SetInt( "Screenmanager Resolution Width", 1920 );
-        PlayerPrefs.SetInt( "Screenmanager Resolution Width", 1080 );
-        PlayerPrefs.SetInt( "Screenmanager Fullscreen mode", (int)FullScreenMode.Windowed );
+        if (Application.platform == RuntimePlatform.WindowsPlayer) {
+            Screen.SetResolution( 1600, 900, FullScreenMode.Windowed);
+        } else {
+            Screen.SetResolution( 1920, 1080, FullScreenMode.Windowed);
+        }
     }
 
     public void StartGame() {
