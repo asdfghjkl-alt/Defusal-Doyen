@@ -9,9 +9,11 @@ public class HighScores : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string path = Application.dataPath + "/HighScores.txt";
+        string path = Application.dataPath + "/HighScoresData/HighScores.txt";
 
         if (!File.Exists(path)) {
+            Directory.CreateDirectory(Application.dataPath + "/HighScoresData");
+            
             using (StreamWriter writer = new StreamWriter(path, false)) { 
                 for (int i = 0; i < 5; i++) {
                     writer.WriteLine(-1);

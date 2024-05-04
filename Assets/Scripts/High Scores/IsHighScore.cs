@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 public class IsHighScore : MonoBehaviour
 {
@@ -8,9 +9,10 @@ public class IsHighScore : MonoBehaviour
     {
         float[] highScoreTimes = new float[5];
 
-        string path = Application.dataPath + "/HighScores.txt";
+        string path = Application.dataPath + "/HighScoresData/HighScores.txt";
 
         if (!File.Exists(path)) {
+            Directory.CreateDirectory(Application.dataPath + "/HighScoresData");
             using (StreamWriter writer = new StreamWriter(path, false)) { 
                 for (int i = 0; i < 5; i++) {
                     writer.WriteLine(-1);
