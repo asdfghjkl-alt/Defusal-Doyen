@@ -18,7 +18,6 @@ public class TileScript : MonoBehaviour
 
     GameManager gameManagerRef;
     Animator cameraShake;
-
     [HideInInspector] public int tileRow;
 
     [HideInInspector] public int tileCol;
@@ -44,15 +43,17 @@ public class TileScript : MonoBehaviour
                 if (!gameManagerRef.usingPlaneCho) {
                     spriteRenderer.material.SetColor("_Color", highlightedColor);
                 }
-                
-                if (gameManagerRef.usingAntiBomb) {
-                    ChangeTileLight(Color.green, 0, 1.3f, 10);
-                } else if (gameManagerRef.usingPlaneCho) {
-                    gameManagerRef.ChangeColLights(tileCol, true);
-                } else if (gameManagerRef.bombTestersUsed > 0) {
-                    ChangeTileLight(Color.green, 0.2f, 2, 3);
-                } else {
-                    ChangeTileLight(Color.red, 0.3f, 2, 3);
+
+                if (!infoOnTile.flagged) {
+                    if (gameManagerRef.usingAntiBomb) {
+                        ChangeTileLight(Color.green, 0, 1.3f, 10);
+                    } else if (gameManagerRef.usingPlaneCho) {
+                        gameManagerRef.ChangeColLights(tileCol, true);
+                    } else if (gameManagerRef.bombTestersUsed > 0) {
+                        ChangeTileLight(Color.green, 0.2f, 2, 3);
+                    } else {
+                        ChangeTileLight(Color.red, 0.3f, 2, 3);
+                    }
                 }
             }
 
@@ -87,7 +88,7 @@ public class TileScript : MonoBehaviour
                             if (!StaticData.won) {
                                 Random.InitState((int)System.DateTime.Now.Ticks);
 
-                                int RandomChance = Random.Range(0, 12);
+                                int RandomChance = Random.Range(0, 10);
 
                                 if (RandomChance == 0) {
                                     StartCoroutine(gameManagerRef.Questioning());

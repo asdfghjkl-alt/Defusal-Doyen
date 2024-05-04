@@ -84,13 +84,9 @@ public class QuestionManager : MonoBehaviour
 
             StaticData.PowerUpNo[2] = numOfGiftedBombTest;
 
-            int numOfGiftedPs = Random.Range(1, 3);
+            StaticData.PowerUpNo[Random.Range(0, 2)] += 1;
 
-            for (int i = 0; i < numOfGiftedPs; i++) {
-                StaticData.PowerUpNo[Random.Range(0, 2)] += 1;
-            }
-
-            if (Random.Range(0, 3) == 0) {
+            if (Random.Range(0, 2) == 0) {
                 StaticData.PowerUpNo[3] += 1;
             }
 
