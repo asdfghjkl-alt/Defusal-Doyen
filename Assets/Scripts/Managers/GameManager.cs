@@ -510,8 +510,10 @@ public class GameManager : MonoBehaviour
             TileData selectedTile = StaticData.tileArr[row, useCol];
 
             if (!selectedTile.revealed) {
-                if (selectedTile.hasBomb) {
-                    FlagTile(row, useCol);
+                if (selectedTile.hasBomb ) {
+                    if (!selectedTile.flagged) {
+                        FlagTile(row, useCol);
+                    }
                 } else {
                     OpenTile(row, useCol);
                 }
