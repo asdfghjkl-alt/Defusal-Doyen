@@ -375,6 +375,20 @@ public class GameManager : MonoBehaviour
 
     // Powerup Functionality
 
+    public void AntiBombClicked() {
+        if (StaticData.PowerUpNo[0] > 0) {
+            StaticData.PowerUpNo[0] -= 1;
+
+            PowerUpNoText[0].text = StaticData.PowerUpNo[0].ToString() + "x";
+
+            usingAntiBomb = true;
+
+            for (int i = 0; i < 4; i++) {
+                PowerUpButtons[i].interactable = false;
+            }
+        }
+    }
+
     public void UseAntiBomb(int useRow, int useCol) {
         usingAntiBomb = false;
 
@@ -402,20 +416,8 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-    }
 
-    public void AntiBombClicked() {
-        if (StaticData.PowerUpNo[0] > 0) {
-            StaticData.PowerUpNo[0] -= 1;
-
-            PowerUpNoText[0].text = StaticData.PowerUpNo[0].ToString() + "x";
-
-            usingAntiBomb = true;
-
-            for (int i = 0; i < 4; i++) {
-                PowerUpButtons[i].interactable = false;
-            }
-        }
+        CheckWinCondition();
     }
 
     public void UseBombFlagger() {
@@ -444,6 +446,8 @@ public class GameManager : MonoBehaviour
                     tileRow += 1;
                 }
             }
+
+            CheckWinCondition();
         }
     }
 
@@ -480,6 +484,8 @@ public class GameManager : MonoBehaviour
         } else {
             OpenTile(useRow, useCol);
         }
+
+        CheckWinCondition();
     }
 
     public void PlaneChoClicked() {
@@ -517,6 +523,8 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        CheckWinCondition();
     }
 
     public IEnumerator Questioning() {
