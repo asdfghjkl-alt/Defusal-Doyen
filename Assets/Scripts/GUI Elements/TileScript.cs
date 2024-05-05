@@ -84,7 +84,7 @@ public class TileScript : MonoBehaviour
 
                             gameManagerRef.CheckWinCondition();
 
-                            if (!StaticData.won) {
+                            if (!gameManagerRef.endedGame) {
                                 Random.InitState((int)System.DateTime.Now.Ticks);
 
                                 int RandomChance = Random.Range(0, 12);

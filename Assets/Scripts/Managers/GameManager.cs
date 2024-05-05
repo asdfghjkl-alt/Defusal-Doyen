@@ -44,8 +44,8 @@ public class GameManager : MonoBehaviour
     // based on tile information and user input
     public TileScript[,] tileObjRef;
 
-    [HideInInspector] public bool stopInteraction;
-    bool endedGame = false;
+    [HideInInspector] public bool stopInteraction = false;
+    [HideInInspector] public bool endedGame = false;
 
     // Variable to track if the user is using the "Antibomb"
     [HideInInspector] public bool usingAntiBomb = false;
@@ -68,7 +68,6 @@ public class GameManager : MonoBehaviour
             StaticData.tileArr = new TileData[width, height];
             StaticData.userFirstInput = false;
             StaticData.timer = 0;
-            StaticData.won = false;
             StaticData.noOfFlags = 0;
 
             for (int i = 0; i < 4; i++) {
@@ -97,7 +96,6 @@ public class GameManager : MonoBehaviour
         }
 
         StaticData.reset = true;
-        stopInteraction = false;
     }
 
     // This is a default function in unity that calls once every 0.02s
@@ -343,18 +341,18 @@ public class GameManager : MonoBehaviour
     public void CheckWinCondition() {
         int tileRow = 0;
 
-        StaticData.won = true;
+        bool hasWon = true;
 
-        while (StaticData.won && tileRow < height) {
+        while (hasWon && tileRow < height) {
             for (int tileCol = 0; tileCol < width; tileCol++) {
                 TileData selectedTile = StaticData.tileArr[tileRow, tileCol];
 
                 if (selectedTile.hasBomb) {
                     if (!selectedTile.flagged) {
-                        StaticData.won = false;
+                        hasWon = false;
                     }
                 } else if (!selectedTile.revealed) {
-                    StaticData.won = false;
+                    hasWon = false;
                 }
                 
             }
@@ -363,7 +361,7 @@ public class GameManager : MonoBehaviour
 
         FlaggedInfoText.text = "Flagged: " + StaticData.noOfFlags.ToString();
 
-        if (StaticData.won) {
+        if (hasWon) {
             stopInteraction = true;
             endedGame = true;
 

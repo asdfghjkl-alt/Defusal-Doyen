@@ -8,5 +8,4 @@ public class StaticData : MonoBehaviour
     public static TileData[,] tileArr;
     public static bool userFirstInput = false;
     public static int[] PowerUpNo = new int[4];
-    public static bool won = false;
 }

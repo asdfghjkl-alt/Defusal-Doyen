@@ -3135,6 +3135,7 @@ MonoBehaviour:
   height: 20
   noOfBombs: 60
   stopInteraction: 0
+  endedGame: 0
   usingAntiBomb: 0
   usingPlaneCho: 0
   bombTestersUsed: 0
