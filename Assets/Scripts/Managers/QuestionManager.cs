@@ -15,6 +15,7 @@ public class QuestionManager : MonoBehaviour
     [SerializeField] private GameObject CorrectScreen;
     [SerializeField] private GameObject IncorrectScreen;
     [SerializeField] private Animator SceneTransition;
+    [SerializeField] private TMP_Text[] PowerUpRewards;
 
     string[] QuestionDesc = new string[44];
     string[,] QuestionResp = new string[44, 4];
@@ -73,16 +74,19 @@ public class QuestionManager : MonoBehaviour
     public void QBtnClick(int index) {
         btnClicked = true;
 
+        int[] OldPowerUpNo = new int[4];
+
         for (int i = 0; i < 4; i++) {
             QuestionRespBtn[i].interactable = false;
+            OldPowerUpNo[i] = StaticData.PowerUpNo[i];
         }
 
         Random.InitState((int) System.DateTime.Now.Ticks);
 
         if (index == CorrectQuestionResp[QuestionNum]) {
-            int numOfGiftedBombTest = Random.Range(2, 5);
+            int numOfGiftedBombTest = Random.Range(1, 3);
 
-            StaticData.PowerUpNo[2] = numOfGiftedBombTest;
+            StaticData.PowerUpNo[2] += numOfGiftedBombTest;
 
             StaticData.PowerUpNo[Random.Range(0, 2)] += 1;
 
@@ -92,6 +96,10 @@ public class QuestionManager : MonoBehaviour
 
             CorrectScreen.SetActive(true);
             FindObjectOfType<AudioManager>().PlaySound("Correct");
+
+            for (int i = 0; i < 4; i++) {
+                PowerUpRewards[i].text = "X" + (StaticData.PowerUpNo[i] - OldPowerUpNo[i]);
+            }
         } else {
             IncorrectScreen.SetActive(true);
 
@@ -108,7 +116,7 @@ public class QuestionManager : MonoBehaviour
     }
 
     public IEnumerator Waiting() {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         SceneTransition.SetTrigger("Start");
 
