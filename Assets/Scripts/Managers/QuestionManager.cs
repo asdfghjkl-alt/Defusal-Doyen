@@ -21,7 +21,7 @@ public class QuestionManager : MonoBehaviour
     string[,] QuestionResp = new string[44, 4];
     int[] CorrectQuestionResp = new int[44];
 
-    int QuestionNum;
+    int questionNum;
     float remainingTime = 15;
     bool btnClicked = false;
 
@@ -48,12 +48,12 @@ public class QuestionManager : MonoBehaviour
             }
         }
 
-        QuestionNum = Random.Range(0, 44);
+        questionNum = Random.Range(0, 44);
 
-        QuestionDescText.text = QuestionDesc[QuestionNum];
+        QuestionDescText.text = QuestionDesc[questionNum];
 
         for (int i = 0; i < 4; i++) {
-            QuestionRespText[i].text = QuestionResp[QuestionNum, i];
+            QuestionRespText[i].text = QuestionResp[questionNum, i];
         }
     }
 
@@ -83,7 +83,7 @@ public class QuestionManager : MonoBehaviour
 
         Random.InitState((int) System.DateTime.Now.Ticks);
 
-        if (index == CorrectQuestionResp[QuestionNum]) {
+        if (index == CorrectQuestionResp[questionNum]) {
             int numOfGiftedBombTest = Random.Range(1, 3);
 
             StaticData.PowerUpNo[2] += numOfGiftedBombTest;
@@ -110,7 +110,7 @@ public class QuestionManager : MonoBehaviour
             }
         }
 
-        QuestionBtnBg[CorrectQuestionResp[QuestionNum]].color = Color.green;
+        QuestionBtnBg[CorrectQuestionResp[questionNum]].color = Color.green;
 
         StartCoroutine(Waiting());
     }

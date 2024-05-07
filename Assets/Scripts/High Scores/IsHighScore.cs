@@ -6,7 +6,7 @@ public class IsHighScore : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        float[] highScoreTimes = new float[5];
+        float[] HighScoreTimes = new float[5];
 
         string path = Application.dataPath + "/HighScoresData/HighScores.txt";
 
@@ -22,7 +22,7 @@ public class IsHighScore : MonoBehaviour
         using (StreamReader reader = new StreamReader(path)) {
             for (int i = 0; i < 5; i++) {
                 string time = reader.ReadLine();
-                highScoreTimes[i] = float.Parse(time);
+                HighScoreTimes[i] = float.Parse(time);
             }
         }
 
@@ -30,19 +30,19 @@ public class IsHighScore : MonoBehaviour
         int index = 0;
 
         while (index < 5 && !endedLoop) {
-            if (highScoreTimes[index] == -1) {
-                highScoreTimes[index] = StaticData.timer;
+            if (HighScoreTimes[index] == -1) {
+                HighScoreTimes[index] = StaticData.timer;
                 endedLoop = true;
             } else {
-                if (StaticData.timer < highScoreTimes[index]) {
+                if (StaticData.timer < HighScoreTimes[index]) {
                     endedLoop = true;
 
                     float timeToInput = StaticData.timer;
 
                     for (int i = index; i < 5; i++) {
-                        float tempTime = highScoreTimes[i];
+                        float tempTime = HighScoreTimes[i];
 
-                        highScoreTimes[i] = timeToInput;
+                        HighScoreTimes[i] = timeToInput;
 
                         timeToInput = tempTime;
                     }
@@ -54,7 +54,7 @@ public class IsHighScore : MonoBehaviour
 
         using (StreamWriter writer = new StreamWriter(path, false)) { 
             for (int i = 0; i < 5; i++) {
-                writer.WriteLine(highScoreTimes[i]);
+                writer.WriteLine(HighScoreTimes[i]);
             }
         }
     }

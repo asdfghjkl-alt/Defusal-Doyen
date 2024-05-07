@@ -3122,10 +3122,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c956eeedd28514676ad3be49a263abaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 5764904036242700848, guid: 6d8e9a7803223497e87a57b4ed5384f0, type: 3}
-  board: {fileID: 747897666}
+  TilePrefab: {fileID: 5764904036242700848, guid: 6d8e9a7803223497e87a57b4ed5384f0, type: 3}
+  Board: {fileID: 747897666}
   tileSize: 0.8
-  timerText: {fileID: 1099605299}
+  TimerText: {fileID: 1099605299}
   PowerUpNoText:
   - {fileID: 597126879}
   - {fileID: 516724429}

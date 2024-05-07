@@ -6,22 +6,22 @@ using System.Collections;
 
 // NOTE FOR WHOLE PROGRAM:
 // Defining "Class VariableName = some class" is by default a pointer in C#
-// E.g "TileData selectedTile = StaticData.tileArr[i, j];"
-// Changing the selectedTile will also change StaticData.tileArr[i, j]
+// E.g "TileData selectedTile = StaticData.TileArr[i, j];"
+// Changing the selectedTile will also change StaticData.TileArr[i, j]
 
 public class GameManager : MonoBehaviour
 {
     // Object reference to spawn the tiles into the scene
-    [SerializeField] private Transform tilePrefab;
+    [SerializeField] private Transform TilePrefab;
 
     // Reference position for the tiles to spawn in
-    [SerializeField] private Transform board;
+    [SerializeField] private Transform Board;
 
     // Tells the board on how to place tiles based on their size
     [SerializeField] private float tileSize;
 
     // To allow displaying the timer on the screen
-    [SerializeField] private TMP_Text timerText;
+    [SerializeField] private TMP_Text TimerText;
 
     // To allow displaying how much of each power up the user has.
     [SerializeField] private TMP_Text[] PowerUpNoText;
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     
     // To allow for the code to change the tile sprites
     // based on tile information and user input
-    public TileScript[,] tileObjRef;
+    public TileScript[,] TileObjRef;
 
     [HideInInspector] public bool stopInteraction = false;
     [HideInInspector] public bool endedGame = false;
@@ -60,12 +60,12 @@ public class GameManager : MonoBehaviour
         NumberOfBombsText.text = "Total Bombs: " + noOfBombs;
         
         // Allows the program to control the sprites of tiles
-        tileObjRef = new TileScript[width, height];
+        TileObjRef = new TileScript[width, height];
 
         // If the game is to be reset (Not going back from question page)
         if (StaticData.reset) {
             // All data is reset to initial status
-            StaticData.tileArr = new TileData[width, height];
+            StaticData.TileArr = new TileData[width, height];
             StaticData.userFirstInput = false;
             StaticData.timer = 0;
             StaticData.noOfFlags = 0;
@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
             int seconds = roundedTimer % 60;
             
             // Displaying the minutes and seconds
-            timerText.text = minutes.ToString() + "MIN " + seconds.ToString() + "S";
+            TimerText.text = minutes.ToString() + "MIN " + seconds.ToString() + "S";
         }
     }
 
@@ -123,11 +123,11 @@ public class GameManager : MonoBehaviour
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
                 // Create a new tile for each row and column
-                Transform tile = Instantiate(tilePrefab);
+                Transform tile = Instantiate(TilePrefab);
                 
                 // Each tile needs to be under another game object to allow them
                 // To be used collectively (Setting up the 2D array of bricks)
-                tile.parent = board;
+                tile.parent = Board;
                 // Centre is at (0, 0)
                 // E.g. 3x3 grid, at column 0, x Position will be at -1, aka -float(width - 1) / 2
                 // As column increases by 1, x Position will also have to add 1, hence add the column to x Position
@@ -141,18 +141,18 @@ public class GameManager : MonoBehaviour
                 tile.localPosition = new Vector2(xPos * tileSize, yPos * tileSize);
 
                 // Getting a reference to the component to allow for changing sprites in program
-                tileObjRef[row, col] = tile.GetComponent<TileScript>();
+                TileObjRef[row, col] = tile.GetComponent<TileScript>();
 
                 // Info on the row and column of the tile is passed to it
                 // Mainly for when clicked, can pass the info into OpenTile, FlagTile, etc funcs 
-                tileObjRef[row, col].tileRow = row;
-                tileObjRef[row, col].tileCol = col;
+                TileObjRef[row, col].tileRow = row;
+                TileObjRef[row, col].tileCol = col;
 
-                tileObjRef[row, col].spriteRenderer = tileObjRef[row, col].GetComponent<SpriteRenderer>();
+                TileObjRef[row, col].spriteRenderer = TileObjRef[row, col].GetComponent<SpriteRenderer>();
 
                 if (StaticData.reset) {
                     // If reset, then the information on tiles should also be reset.
-                    StaticData.tileArr[row, col] = new TileData();
+                    StaticData.TileArr[row, col] = new TileData();
                 }
             }
         }
@@ -162,11 +162,11 @@ public class GameManager : MonoBehaviour
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
                 // Getting reference to the data on the tile
-                TileData selectedTile = StaticData.tileArr[row, col];
+                TileData selectedTile = StaticData.TileArr[row, col];
 
                 // Getting reference to the script of the object
                 // To allow changing sprite
-                TileScript selectedTileObj = tileObjRef[row, col];
+                TileScript selectedTileObj = TileObjRef[row, col];
 
                 // Choosing what sprite to change the tile to based on 
                 // Its information
@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
 
             // Getting reference to the data on the tile
             // Note: THIS IS A POINTER, NOT A COPY
-            TileData selectedTile = StaticData.tileArr[bombRow, bombCol];
+            TileData selectedTile = StaticData.TileArr[bombRow, bombCol];
 
             // Bomb positions cannot be adjacent to the tile the user first clicked
             // Nor at a position that already has a bomb
@@ -220,7 +220,7 @@ public class GameManager : MonoBehaviour
                 
                 // Getting reference to the data on the tile
                 // Note: THIS IS A POINTER, NOT A COPY
-                TileData selectedTile = StaticData.tileArr[row, col];
+                TileData selectedTile = StaticData.TileArr[row, col];
 
                 // Checks only if the tile isn't a bomb
                 if (!selectedTile.hasBomb) {
@@ -229,7 +229,7 @@ public class GameManager : MonoBehaviour
                         for (int j = col - 1; j <= col + 1; j++) {
                             // Checks if the position is valid first
                             // And then checks if the tile has a bomb
-                            if (isValidPos(i, j) && StaticData.tileArr[i, j].hasBomb) {
+                            if (isValidPos(i, j) && StaticData.TileArr[i, j].hasBomb) {
                                 // One more adjacent tile has a bomb
                                 bombsNearTile += 1;
                             }
@@ -256,7 +256,7 @@ public class GameManager : MonoBehaviour
         for (int i = _row - 1; i <= _row + 1; i++) {
             for (int j = _col - 1; j <= _col + 1; j++) {
                 if (isValidPos(i, j)) {
-                    TileData selectedTile = StaticData.tileArr[i, j];
+                    TileData selectedTile = StaticData.TileArr[i, j];
 
                     if (!selectedTile.revealed) {
                         OpenTile(i, j);
@@ -274,7 +274,7 @@ public class GameManager : MonoBehaviour
         for (int i = row - 1; i <= row + 1; i++) {
             for (int j = col - 1; j <= col + 1; j++) {
                 if (isValidPos(i, j)) {
-                    StaticData.tileArr[i, j].safeBcFClick = true;
+                    StaticData.TileArr[i, j].safeBcFClick = true;
                 }
             }
         }
@@ -284,8 +284,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void OpenTile(int tileRow, int tileCol) {
-        TileData selectedTile = StaticData.tileArr[tileRow, tileCol];
-        TileScript selectedTileObj = tileObjRef[tileRow, tileCol];
+        TileData selectedTile = StaticData.TileArr[tileRow, tileCol];
+        TileScript selectedTileObj = TileObjRef[tileRow, tileCol];
 
         selectedTile.revealed = true;
 
@@ -322,8 +322,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void FlagTile(int tileRow, int tileCol) {
-        TileData selectedTile = StaticData.tileArr[tileRow, tileCol];
-        TileScript selectedTileObj = tileObjRef[tileRow, tileCol];
+        TileData selectedTile = StaticData.TileArr[tileRow, tileCol];
+        TileScript selectedTileObj = TileObjRef[tileRow, tileCol];
 
         selectedTile.flagged = !selectedTile.flagged;
 
@@ -345,7 +345,7 @@ public class GameManager : MonoBehaviour
 
         while (hasWon && tileRow < height) {
             for (int tileCol = 0; tileCol < width; tileCol++) {
-                TileData selectedTile = StaticData.tileArr[tileRow, tileCol];
+                TileData selectedTile = StaticData.TileArr[tileRow, tileCol];
 
                 if (selectedTile.hasBomb) {
                     if (!selectedTile.flagged) {
@@ -399,8 +399,8 @@ public class GameManager : MonoBehaviour
         for (int i = useRow - 1; i <= useRow + 1; i++) {
             for (int j = useCol - 1; j <= useCol + 1; j++) {
                 if (isValidPos(i, j)) {
-                    TileData selectedTile = StaticData.tileArr[i, j];
-                    TileScript selectedTileObj = tileObjRef[i, j];
+                    TileData selectedTile = StaticData.TileArr[i, j];
+                    TileScript selectedTileObj = TileObjRef[i, j];
 
                     if (!selectedTile.revealed) {
                         if (!selectedTile.hasBomb) {
@@ -433,7 +433,7 @@ public class GameManager : MonoBehaviour
             int tileCol = 0;
 
             while (bombsFlagged < 2 && tileRow < height) {
-                if (StaticData.tileArr[tileRow, tileCol].hasBomb && !StaticData.tileArr[tileRow, tileCol].flagged) {
+                if (StaticData.TileArr[tileRow, tileCol].hasBomb && !StaticData.TileArr[tileRow, tileCol].flagged) {
                     FlagTile(tileRow, tileCol);
 
                     bombsFlagged += 1;
@@ -479,7 +479,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (StaticData.tileArr[useRow, useCol].hasBomb) {
+        if (StaticData.TileArr[useRow, useCol].hasBomb) {
             FlagTile(useRow, useCol);
         } else {
             OpenTile(useRow, useCol);
@@ -511,7 +511,7 @@ public class GameManager : MonoBehaviour
         usingPlaneCho = false;
 
         for (int row = 0; row < height; row++) {
-            TileData selectedTile = StaticData.tileArr[row, useCol];
+            TileData selectedTile = StaticData.TileArr[row, useCol];
 
             if (!selectedTile.revealed) {
                 if (selectedTile.hasBomb ) {
@@ -545,14 +545,14 @@ public class GameManager : MonoBehaviour
     public IEnumerator RevealBombs() {
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
-                if (!StaticData.tileArr[row, col].revealed) {
-                    if (StaticData.tileArr[row, col].hasBomb && !StaticData.tileArr[row, col].flagged) {
+                if (!StaticData.TileArr[row, col].revealed) {
+                    if (StaticData.TileArr[row, col].hasBomb && !StaticData.TileArr[row, col].flagged) {
                         yield return new WaitForSeconds(0.5f);
-                        tileObjRef[row, col].ChangeSprite(0, true);
+                        TileObjRef[row, col].ChangeSprite(0, true);
                         FindObjectOfType<AudioManager>().PlaySound("Boom");
-                    } else if (!StaticData.tileArr[row, col].hasBomb && StaticData.tileArr[row, col].flagged) {
+                    } else if (!StaticData.TileArr[row, col].hasBomb && StaticData.TileArr[row, col].flagged) {
                         yield return new WaitForSeconds(0.5f);
-                        tileObjRef[row, col].ChangeSprite(3, false);
+                        TileObjRef[row, col].ChangeSprite(3, false);
                         FindObjectOfType<AudioManager>().PlaySound("Flag");
                     }
                 }
@@ -582,14 +582,14 @@ public class GameManager : MonoBehaviour
     public void ChangeColLights(int useCol, bool turnOn) {
         if (turnOn) {
             for (int row = 0; row < height; row++) {
-                if (!StaticData.tileArr[row, useCol].revealed) {
-                    tileObjRef[row, useCol].ChangeTileLight(Color.green, 0.9f, 2, 3);
+                if (!StaticData.TileArr[row, useCol].revealed) {
+                    TileObjRef[row, useCol].ChangeTileLight(Color.green, 0.9f, 2, 3);
                 }
             }
         } else {
             for (int row = 0; row < height; row++) {
-                if (!StaticData.tileArr[row, useCol].revealed) {
-                    tileObjRef[row, useCol].ReturnTileNormal();
+                if (!StaticData.TileArr[row, useCol].revealed) {
+                    TileObjRef[row, useCol].ReturnTileNormal();
                 }
             }
         }

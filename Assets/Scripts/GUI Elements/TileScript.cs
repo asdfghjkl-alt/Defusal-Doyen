@@ -34,7 +34,7 @@ public class TileScript : MonoBehaviour
     }
     private void OnMouseOver()
     {
-        TileData infoOnTile = StaticData.tileArr[tileRow, tileCol];
+        TileData infoOnTile = StaticData.TileArr[tileRow, tileCol];
 
         if (!gameManagerRef.stopInteraction) {
             if (!infoOnTile.revealed) {
@@ -142,7 +142,7 @@ public class TileScript : MonoBehaviour
             if (ribbonEffects) {
                 ribbonParticles.Play();
             }
-            spriteRenderer.sprite = revealedTiles[StaticData.tileArr[tileRow, tileCol].bombsAdjacent];
+            spriteRenderer.sprite = revealedTiles[StaticData.TileArr[tileRow, tileCol].bombsAdjacent];
             tileLight.color = Color.blue;
             tileLight.intensity = 1f;
             tileLightObjRef.SetActive(true);
