@@ -17,9 +17,6 @@ public class GameManager : MonoBehaviour
     // Reference position for the tiles to spawn in
     [SerializeField] private Transform Board;
 
-    // Tells the board on how to place tiles based on their size
-    [SerializeField] private float tileSize;
-
     // To allow displaying the timer on the screen
     [SerializeField] private TMP_Text TimerText;
 
@@ -35,6 +32,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button[] PowerUpButtons;
     [SerializeField] private Animator SceneTransition;
     [SerializeField] private Animator CameraShake;
+
+    // Tells the board on how to place tiles based on their size
+    [SerializeField] private float tileSize;
 
     [SerializeField] private int width;
     [SerializeField] private int height;

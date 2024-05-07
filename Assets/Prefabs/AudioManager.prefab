@@ -44,46 +44,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8dd7b76a8d3540d799cfbae80b99362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
+  Sounds:
   - clip: {fileID: 8300000, guid: a9752a3ddf3e24757a859bd15145c5da, type: 3}
     name: Background Sound
     loop: 1
-    volume: 0.5
-    pitch: 0.6
-    source: {fileID: 0}
-  - clip: {fileID: 8300000, guid: 48cdce1bab27344659e6a9c5eb1dbd70, type: 3}
-    name: Opening Tile
-    loop: 0
-    volume: 0.2
-    pitch: 2
+    volume: 1
+    pitch: 0.65
     source: {fileID: 0}
   - clip: {fileID: 8300000, guid: 304107b9ecba2482bb1b2f943a86f7fc, type: 3}
     name: Boom
     loop: 0
     volume: 2
-    pitch: 0.5
-    source: {fileID: 0}
-  - clip: {fileID: 8300000, guid: 5737369dd3fa042ce9adcb25bdf36659, type: 3}
-    name: Flag
-    loop: 0
-    volume: 1
-    pitch: 1
-    source: {fileID: 0}
-  - clip: {fileID: 8300000, guid: b31884b848f2341ea81dc231363dfd01, type: 3}
-    name: Correct
-    loop: 0
-    volume: 1
-    pitch: 1
-    source: {fileID: 0}
-  - clip: {fileID: 8300000, guid: d25f79c2e7b9344728309d8443a892f2, type: 3}
-    name: Wrong
-    loop: 0
-    volume: 0.5
-    pitch: 0.6
+    pitch: 0.65
     source: {fileID: 0}
   - clip: {fileID: 8300000, guid: fb20b983ff1ec4402bfebae00f82e563, type: 3}
-    name: Click
+    name: Opening Tile
     loop: 0
-    volume: 0.5
-    pitch: 0.6
+    volume: 0.6
+    pitch: 1.59
+    source: {fileID: 0}
+  - clip: {fileID: 0}
+    name: 
+    loop: 0
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - clip: {fileID: 0}
+    name: 
+    loop: 0
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - clip: {fileID: 0}
+    name: 
+    loop: 0
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - clip: {fileID: 0}
+    name: 
+    loop: 0
+    volume: 0
+    pitch: 0
     source: {fileID: 0}
