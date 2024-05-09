@@ -2,21 +2,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
+// NOTE: for [SerializeField] the variable is assigned in the Unity Editor
+
+// Class for the prefab of the tile
 public class TileScript : MonoBehaviour
 {
+    // Sprite for unrevealed tile
     [SerializeField] private Sprite unrevealedTile;
+
+    // Sprite for flagged tile
     [SerializeField] private Sprite flaggedTile;
-    [SerializeField] private List<Sprite> revealedTiles;
+
+    // 9 sprites of revealed tiles based on how many bombs are next to them
+    [SerializeField] private Sprite[] revealedTiles;
+
+    // Sprite for tile revealed to be a bomb
     [SerializeField] private Sprite bombTile;
+
+    // Sets component for light on tile when opened
+    // Component for setting attributes of the light
     [SerializeField] private Light2D tileLight;
+
+    // Sets component for light on tile when opened (Setting it to be active)
     [SerializeField] private GameObject tileLightObjRef;
+
+    // Sets component for light on hovering on unopened tile (Setting it to be active)
     [SerializeField] private GameObject tileLightHoverRef;
+
+    // Gets components of light to be set active on hovering unopened tile
+    // Allows for setting attributes to the light (e.g. colour)
     [SerializeField] private Light2D tileLightHover;
+
+    // Allows for control over particle system when tile is opened and not a bomb
     [SerializeField] private ParticleSystem ribbonParticles;
+
+    // Allows for control over particle system for when tile is opened and a bomb
     [SerializeField] private ParticleSystem ribbonParticlesDeath;
 
+    // Allows for getting game manager to conduct functions (e.g. Opening Tile)
     GameManager gameManagerRef;
+
+    // Gets Animator to set a trigger for camera shaking
     Animator cameraShake;
+
+    // 
     [HideInInspector] public int tileRow;
 
     [HideInInspector] public int tileCol;

@@ -192,8 +192,8 @@ MonoBehaviour:
     y: 0
     width: 225
     height: 480
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -238,7 +238,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 1e53fdfff455fdff9a5dfdffd860fdff1afbffff
+      m_ExpandedIDs: 1afbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -672,9 +672,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.7018961, y: 0.8456836, z: 90}
+    m_Target: {x: 4.6873403, y: 1.2372531, z: 235.68527}
     speed: 2
-    m_Value: {x: -0.7018961, y: 0.8456836, z: 90}
+    m_Value: {x: 4.6873403, y: 1.2372531, z: 235.68527}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -724,9 +724,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 10
+    m_Target: 18.92367
     speed: 2
-    m_Value: 10
+    m_Value: 18.92367
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -945,7 +945,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Audio
+    - Assets/Prefabs
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -953,16 +953,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Audio
+  - Assets/Prefabs
   m_LastFoldersGridSize: -1
   m_LastProjectPath: /Users/edwardliu/Defusal Doyen
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 74.99849}
-    m_SelectedIDs: 3e730000
-    m_LastClickedID: 29502
-    m_ExpandedIDs: 00000000127300001473000016730000187300001a7300001c7300001e730000207300002273000000ca9a3b
+    scrollPos: {x: 0, y: 41.998306}
+    m_SelectedIDs: 50730000
+    m_LastClickedID: 29520
+    m_ExpandedIDs: 000000001c7300001e73000020730000227300002473000026730000287300002a7300002c73000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -990,7 +990,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000127300001473000016730000187300001a7300001c7300001e7300002073000022730000
+    m_ExpandedIDs: 000000001c7300001e73000020730000227300002473000026730000287300002a7300002c730000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1116,7 +1116,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 34514
+  m_LastSelectedObjectID: 40894
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1136,8 +1136,8 @@ MonoBehaviour:
     y: 0
     width: 345.5
     height: 797
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
