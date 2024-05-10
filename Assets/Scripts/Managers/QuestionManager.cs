@@ -90,7 +90,7 @@ public class QuestionManager : MonoBehaviour
 
             StaticData.PowerUpNo[Random.Range(0, 2)] += 1;
 
-            if (Random.Range(0, 2) == 0) {
+            if (Random.Range(0, 3) == 0) {
                 StaticData.PowerUpNo[3] += 1;
             }
 

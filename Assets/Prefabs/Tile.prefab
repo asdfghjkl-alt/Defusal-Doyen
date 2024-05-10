@@ -106,7 +106,7 @@ MonoBehaviour:
   flaggedTile: {fileID: 21300000, guid: f5aaba3a2b94b4c7cb32ea1f821558e0, type: 3}
   revealedTiles:
   - {fileID: 21300000, guid: ee7559e66a2884970aa13dbe27a72e0c, type: 3}
-  - {fileID: 21300000, guid: 96d81af94a68848f3ac6318f85fa430f, type: 3}
+  - {fileID: 21300000, guid: 2de5b501ff8e0411aa1ad9382b4a2bbf, type: 3}
   - {fileID: 21300000, guid: 3eb30ab1d6dec4f6c8ccbcc79a827294, type: 3}
   - {fileID: 21300000, guid: 66478357f21f44235aa42b5c2893eb33, type: 3}
   - {fileID: 21300000, guid: a00f3abe4c7694da69c00cf9ce8eaf3a, type: 3}
