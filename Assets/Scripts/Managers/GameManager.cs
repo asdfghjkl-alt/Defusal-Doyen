@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Threading;
 
 // NOTE FOR WHOLE PROGRAM:
 // Defining "Class VariableName = some class" is by default a pointer in C#
@@ -543,17 +544,26 @@ public class GameManager : MonoBehaviour
     }
 
     public IEnumerator RevealBombs() {
+        int bombRevealedPerTime = 1;
+
+        Random.InitState((int) System.DateTime.Now.Ticks);
+
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
                 if (!StaticData.TileArr[row, col].revealed) {
+
                     if (StaticData.TileArr[row, col].hasBomb && !StaticData.TileArr[row, col].flagged) {
-                        yield return new WaitForSeconds(0.5f);
+                        bombRevealedPerTime -= 1;
                         TileObjRef[row, col].ChangeSprite(0, true);
-                        FindObjectOfType<AudioManager>().PlaySound("Boom");
+
+                        if (bombRevealedPerTime == 0) {
+                            yield return new WaitForSeconds(0.5f);
+                            FindObjectOfType<AudioManager>().PlaySound("Boom");
+
+                            bombRevealedPerTime = Random.Range(1, 8);
+                        }
                     } else if (!StaticData.TileArr[row, col].hasBomb && StaticData.TileArr[row, col].flagged) {
-                        yield return new WaitForSeconds(0.5f);
                         TileObjRef[row, col].ChangeSprite(3, false);
-                        FindObjectOfType<AudioManager>().PlaySound("Flag");
                     }
                 }
             }

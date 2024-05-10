@@ -165,15 +165,15 @@ public class TileScript : MonoBehaviour
             }
             spriteRenderer.sprite = bombTile;
             tileLight.color = Color.white;
-            tileLight.intensity = 0.5f;
+            tileLight.intensity = 0.6f;
             tileLightObjRef.SetActive(true);
         } else if (state == 1) {
             if (ribbonEffects) {
                 ribbonParticles.Play();
             }
             spriteRenderer.sprite = revealedTiles[StaticData.TileArr[tileRow, tileCol].bombsAdjacent];
-            tileLight.color = Color.blue;
-            tileLight.intensity = 1f;
+            tileLight.color = Color.white;
+            tileLight.intensity = 0.6f;
             tileLightObjRef.SetActive(true);
         } else if (state == 2) {
             spriteRenderer.sprite = flaggedTile;
