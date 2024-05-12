@@ -149,8 +149,6 @@ public class GameManager : MonoBehaviour
                 TileObjRef[row, col].tileRow = row;
                 TileObjRef[row, col].tileCol = col;
 
-                TileObjRef[row, col].spriteRenderer = TileObjRef[row, col].GetComponent<SpriteRenderer>();
-
                 if (StaticData.reset) {
                     // If reset, then the information on tiles should also be reset.
                     StaticData.TileArr[row, col] = new TileData();

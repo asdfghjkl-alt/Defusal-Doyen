@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.IO;
 
+// Class in Endscreen Win Screen
 public class IsHighScore : MonoBehaviour
 {
     // Start is called before the first frame update

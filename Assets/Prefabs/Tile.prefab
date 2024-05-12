@@ -102,9 +102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad415e3893c042089f629dffc29ce50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unrevealedTile: {fileID: 1616136776, guid: cbd798abc467941819aa813942baae73, type: 3}
-  flaggedTile: {fileID: 21300000, guid: f5aaba3a2b94b4c7cb32ea1f821558e0, type: 3}
-  revealedTiles:
+  UnrevealedTileSpr: {fileID: 1616136776, guid: cbd798abc467941819aa813942baae73, type: 3}
+  FlaggedTileSpr: {fileID: 21300000, guid: f5aaba3a2b94b4c7cb32ea1f821558e0, type: 3}
+  RevealedTilesSpr:
   - {fileID: 21300000, guid: ee7559e66a2884970aa13dbe27a72e0c, type: 3}
   - {fileID: 21300000, guid: 4eeb60fbdd3bd4338b14f76e0a1edbc3, type: 3}
   - {fileID: 21300000, guid: df6db841d870c4257b34694b77e76d5c, type: 3}
@@ -114,13 +114,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: fbf2184149d1846af9a4e6e0874a301d, type: 3}
   - {fileID: 21300000, guid: 60109b7cadc16497cbdf8a8637d45ff2, type: 3}
   - {fileID: 21300000, guid: 8fd0b032f1b9f4c948a04070b4b13b02, type: 3}
-  bombTile: {fileID: 21300000, guid: 53f944b6d071d4cc9ab753c39902e27b, type: 3}
-  tileLight: {fileID: 1891547948427709359}
-  tileLightObjRef: {fileID: 2991266953637464241}
-  tileLightHoverRef: {fileID: 3747098782635873124}
-  tileLightHover: {fileID: 3266079409753871190}
-  ribbonParticles: {fileID: 4593636218584205432}
-  ribbonParticlesDeath: {fileID: 625643786228750887}
+  BombTileSpr: {fileID: 21300000, guid: 53f944b6d071d4cc9ab753c39902e27b, type: 3}
+  TileOpenLight: {fileID: 1891547948427709359}
+  TileOpenLightObjRef: {fileID: 2991266953637464241}
+  TileLightHoverRef: {fileID: 3747098782635873124}
+  TileLightHover: {fileID: 3266079409753871190}
+  RibbonParticles: {fileID: 4593636218584205432}
+  RibbonParticlesDeath: {fileID: 625643786228750887}
   tileRow: 0
   tileCol: 0
   spriteRenderer: {fileID: 0}
