@@ -79,7 +79,7 @@ public class QuestionManager : MonoBehaviour
 
         // Randomly generates the question number for which question
         // The user should answer
-        int questionNum = Random.Range(0, 44);
+        questionNum = Random.Range(0, 44);
 
         // Displays the Question Prompt/Description
         QuestionDescText.text = QuestionDesc[questionNum];
