@@ -24,39 +24,59 @@ public class GameManager : MonoBehaviour
     // To allow displaying how much of each power up the user has.
     [SerializeField] private TMP_Text[] PowerUpNoText;
 
-    // Text that allows the user to see how many bombs are correctly flagged (Defusing Report)
+    // Text to see how many flags are on the board
     [SerializeField] private TMP_Text FlaggedInfoText;
+
+    // Text telling user how many bombs are on the board
     [SerializeField] private TMP_Text NumberOfBombsText;
+
+    // Text telling how many bomb testers the user is currently using
     [SerializeField] private TMP_Text BombTestersUsedText;
 
-    // To allow the program to disable the buttons while using "Antibomb"
+    // To allow the program to disable the buttons
     [SerializeField] private Button[] PowerUpButtons;
+
+    // To control animation of changing scene
     [SerializeField] private Animator SceneTransition;
+    
+    // Animation of camera shaking
     [SerializeField] private Animator CameraShake;
 
     // Tells the board on how to place tiles based on their size
     [SerializeField] private float tileSize;
 
+    // Width of board
     [SerializeField] private int width;
+
+    // Height of board
     [SerializeField] private int height;
+
+    // Number of bombs to place on board
     [SerializeField] private int noOfBombs;
     
     // To allow for the code to change the tile sprites
     // based on tile information and user input
     public TileScript[,] TileObjRef;
 
+    // Variable determining if tiles are non-interactable
     [HideInInspector] public bool stopInteraction = false;
+
+    // Keeps track if game has ended
     [HideInInspector] public bool endedGame = false;
 
-    // Variable to track if the user is using the "Antibomb"
+    // Variable to track if the user is using the Anti Bomb
     [HideInInspector] public bool usingAntiBomb = false;
+
+    // Variable to track if the user is using Plane Cho
     [HideInInspector] public bool usingPlaneCho = false;
+
+    // Variable to track how many bomb testers the user is currently using
     [HideInInspector] public int bombTestersUsed = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Creating a function to create an initial game board, input width: 15, height: 15, number of bombs: 30
+        // Creating a function to create an initial game board
 
         NumberOfBombsText.text = "Total Bombs: " + noOfBombs;
         
@@ -96,6 +116,7 @@ public class GameManager : MonoBehaviour
             PowerUpNoText[i].text = StaticData.PowerUpNo[i].ToString() + "x";
         }
 
+        // As default, data should reset when leaving scene
         StaticData.reset = true;
     }
 
@@ -118,9 +139,6 @@ public class GameManager : MonoBehaviour
     }
 
     void createGameBoard() {
-        float xPos;
-        float yPos;
-
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
                 // Create a new tile for each row and column
@@ -132,11 +150,11 @@ public class GameManager : MonoBehaviour
                 // Centre is at (0, 0)
                 // E.g. 3x3 grid, at column 0, x Position will be at -1, aka -float(width - 1) / 2
                 // As column increases by 1, x Position will also have to add 1, hence add the column to x Position
-                xPos = col - (width - 1) / 2;
+                float xPos = col - (width - 1) / 2;
 
                 // E.g. 3x3 grid, at row 0, y Position will be at 1, hence float(width - 1) / 2
                 // As row increases by 1, y Position will decrease by 1, hence sutracting the row to y Position
-                yPos = (height - 1) / 2 - row;
+                float yPos = (height - 1) / 2 - row;
 
                 // Setting actual position in terms of tile's dimensions
                 tile.localPosition = new Vector2(xPos * tileSize, yPos * tileSize);
@@ -172,23 +190,27 @@ public class GameManager : MonoBehaviour
 
                 // Check the TileScript ChangeSprite() function for more info
                 if (selectedTile.revealed) {
+                    // Revealed Sprite
                     selectedTileObj.ChangeSprite(1, false);
                 } else if (selectedTile.flagged) {
+                    // Flagged Sprite
                     selectedTileObj.ChangeSprite(2, false);
                 } else {
+                    // Unrevealed Sprite
                     selectedTileObj.ChangeSprite(3, false);
                 }
             }
         }
     }
 
-    void SetMines() {
+    void SetBombs() {
         // Note: Mines are set AFTER first click
 
+        // Makes generation actually random
         Random.InitState((int) System.DateTime.Now.Ticks);
 
         int bombsPlaced = 0;
-        // Keeps track of how many mines are set
+        // Keeps track of how many bombs are set
 
         while (bombsPlaced < noOfBombs) {
             // Generating random position for a new bomb position
@@ -252,12 +274,17 @@ public class GameManager : MonoBehaviour
     }
 
     public void OpenAdjTiles(int _row, int _col) {
+        // Loops through adjacent tiles
         for (int i = _row - 1; i <= _row + 1; i++) {
             for (int j = _col - 1; j <= _col + 1; j++) {
+                // Checks if tile position is valid
                 if (isValidPos(i, j)) {
+
+                    // Gets data on the tile
                     TileData selectedTile = StaticData.TileArr[i, j];
 
                     if (!selectedTile.revealed) {
+                        // If tile hasn't already been revealed, then open the tile
                         OpenTile(i, j);
                     }
                 }
@@ -266,108 +293,167 @@ public class GameManager : MonoBehaviour
     }
 
     void OnFirstClick(int row, int col) {
+        // After opening first tile, power up buttons are interactable
         for (int i = 0; i < 4; i++) {
             PowerUpButtons[i].interactable = true;
         }
 
+        // Loops through adjacent tiles
         for (int i = row - 1; i <= row + 1; i++) {
             for (int j = col - 1; j <= col + 1; j++) {
+                
+                // Checks if the position is valid
                 if (isValidPos(i, j)) {
+                    // Sets those tiles to be safe (i.e. No bombs on them)
                     StaticData.TileArr[i, j].safeBcFClick = true;
                 }
             }
         }
 
-        SetMines();
+        // Sets the bomb positions
+        SetBombs();
+
+        // Function to set numbers on tiles
         SetNumbersOnTiles();
     }
 
     public void OpenTile(int tileRow, int tileCol) {
+        // Gets data on the tile
         TileData selectedTile = StaticData.TileArr[tileRow, tileCol];
-        TileScript selectedTileObj = TileObjRef[tileRow, tileCol];
 
+        // Allows for changing of sprites
+        TileScript selectedTileObj = TileObjRef[tileRow, tileCol];
+        
+        // Tile is now revealed
         selectedTile.revealed = true;
 
         if (selectedTile.flagged) {
+            // Number of flags should decrease by 1
             StaticData.noOfFlags -= 1;
+
+            // Tile is no longer flagged
             selectedTile.flagged = false;
         }
 
         if (!StaticData.userFirstInput) {
+            // If this is the user's first input
             StaticData.userFirstInput = true;
 
+            // Function for user's first click
             OnFirstClick(tileRow, tileCol);
         }
 
         if (selectedTile.hasBomb) {
+            // If the tile is a bomb, then change sprite to bomb
             selectedTileObj.ChangeSprite(0, true);
 
+            // Play sound effect of a boom
             FindObjectOfType<AudioManager>().PlaySound("Boom");
 
+            // Tells that program shold stop interaction of tiles
             stopInteraction = true;
+
+            // Game has ended
             endedGame = true;
 
+            // Sets power up buttons to be non-interactable
             for (int i = 0; i < 4; i++) {
                 PowerUpButtons[i].interactable = false;
             }
-
+            
+            // Function to reveal bomb positions
             StartCoroutine(RevealBombs());
         } else {
+            // If the tile isn't a bomb, then change sprite to open tile
             selectedTileObj.ChangeSprite(1 ,true);
+
+            // If the tile has no bombs adjacent it
             if (selectedTile.bombsAdjacent == 0) {
+                // Open all adjacent tiles
                 OpenAdjTiles(tileRow, tileCol);
             }
         }
     }
 
     public void FlagTile(int tileRow, int tileCol) {
+        // Gets data on selected tile
         TileData selectedTile = StaticData.TileArr[tileRow, tileCol];
+
+        // Allows the program to change sprites
         TileScript selectedTileObj = TileObjRef[tileRow, tileCol];
 
+        // Changes flagged state to opposite value (Boolean)
         selectedTile.flagged = !selectedTile.flagged;
 
+        // If it is flagged
         if (selectedTile.flagged) {
+            // One more flag on board
             StaticData.noOfFlags += 1;
+
+            // Changes sprite to flagged tile
             selectedTileObj.ChangeSprite(2, false);
         } else {
+            // One less flag on board
             StaticData.noOfFlags -= 1;
+
+            // Changes sprite to unrevealed tile
             selectedTileObj.ChangeSprite(3, false);
         }
-
+        
+        // Changes text to display how many bombs are flagged
         FlaggedInfoText.text = "Flagged: " + StaticData.noOfFlags.ToString();
     }
 
     public void CheckWinCondition() {
+        // Starts from the first row in the check
         int tileRow = 0;
 
+        // Keeps track if the player has won
         bool hasWon = true;
 
+        // While no conditions have been detected that user hasn't won
+        // And the tile row looping doesn't exceed the height of the board
         while (hasWon && tileRow < height) {
+
+            // Loops through the columns
             for (int tileCol = 0; tileCol < width; tileCol++) {
+                // Gets data of the tile at the position
                 TileData selectedTile = StaticData.TileArr[tileRow, tileCol];
 
+                // If the tile has a bomb, and isn't flagged then user hasn't won
                 if (selectedTile.hasBomb) {
                     if (!selectedTile.flagged) {
                         hasWon = false;
                     }
                 } else if (!selectedTile.revealed) {
+                    // If safe tile hasn't been revealed, then user hasn't won
                     hasWon = false;
                 }
-                
             }
+
+            // Iterate through next row  
             tileRow += 1;
         }
 
+        // Changes text for how many flags are on the board
+        // As this function is called by processes that change the number of flags
+        // On the board
         FlaggedInfoText.text = "Flagged: " + StaticData.noOfFlags.ToString();
 
+        // If the user has won
         if (hasWon) {
+            // Stop interaction of tiles
             stopInteraction = true;
+
+            // Tells program that game has ended
             endedGame = true;
 
+            // Sets power up buttons to be non-interactable
             for (int i = 0; i < 4; i++) {
                 PowerUpButtons[i].interactable = false;
             }
 
+            // Function to move to win screen
             StartCoroutine(MoveToWinScreen());
         }
     }
@@ -375,13 +461,18 @@ public class GameManager : MonoBehaviour
     // Powerup Functionality
 
     public void AntiBombClicked() {
+        // Checks if user actually has that Anti Bomb
         if (StaticData.PowerUpNo[0] > 0) {
+            // Tracks that User has one less Anti Bomb
             StaticData.PowerUpNo[0] -= 1;
 
+            // Changes the text to display number of Anti Bombs
             PowerUpNoText[0].text = StaticData.PowerUpNo[0].ToString() + "x";
 
+            // Keeps track if user is using Anti Bomb
             usingAntiBomb = true;
 
+            // Power Up buttons non-interactable
             for (int i = 0; i < 4; i++) {
                 PowerUpButtons[i].interactable = false;
             }
@@ -389,48 +480,75 @@ public class GameManager : MonoBehaviour
     }
 
     public void UseAntiBomb(int useRow, int useCol) {
+        // User is no longer using anti bomb
         usingAntiBomb = false;
 
+        // Power Up buttons now interactable
         for (int i = 0; i < 4; i++) {
             PowerUpButtons[i].interactable = true;
         }
 
+        // Loops through adjacent tiles
         for (int i = useRow - 1; i <= useRow + 1; i++) {
             for (int j = useCol - 1; j <= useCol + 1; j++) {
+                // If the position is valid (not out of board)
                 if (isValidPos(i, j)) {
+                    // Gets data on the tile
                     TileData selectedTile = StaticData.TileArr[i, j];
+
+                    // Allows changing of tile sprite
                     TileScript selectedTileObj = TileObjRef[i, j];
 
+
+                    // If the tile hasn't been revealed
                     if (!selectedTile.revealed) {
                         if (!selectedTile.hasBomb) {
+                            // If the tile doesn't have a bomb, then open it
                             OpenTile(i, j);
-                        } else {
-                            if (!selectedTile.flagged) {
-                                StaticData.noOfFlags += 1;
-                                selectedTile.flagged = true;
-                                selectedTileObj.ChangeSprite(2, false);
-                            }
+                        } else if (!selectedTile.flagged) {
+                            // If the tile is a bomb and hasn't been flagged
+
+                            // One more flag is on board
+                            StaticData.noOfFlags += 1;
+
+                            // Tracks tile to be flagged
+                            selectedTile.flagged = true;
+
+                            // Changes sprite of tile to flagged
+                            selectedTileObj.ChangeSprite(2, false);
                         }
+                        
                     }
                 }
             }
         }
-
+        
+        // Checks win condition after
         CheckWinCondition();
     }
 
     public void UseBombFlagger() {
+        // Checks if user actually has a Bomb Flagger
         if (StaticData.PowerUpNo[1] > 0) {
+
+            // Tracks that User has one less Bomb Flagger
             StaticData.PowerUpNo[1] -= 1;
+
+            // Plays sound of flag
             FindObjectOfType<AudioManager>().PlaySound("Flag");
 
+            // Displays how many Bomb Flaggers user has
             PowerUpNoText[1].text = StaticData.PowerUpNo[1].ToString() + "x";
 
+            // Keeps track of how many bombs have been flagged with bomb flagger
             int bombsFlagged = 0;
-
+            
+            // Keeps track of the tile row and column looping through
             int tileRow = 0;
             int tileCol = 0;
 
+            // While bomb flagger hasn't flagged 2 bombs or
+            // if tileRow is out of bounds of board height
             while (bombsFlagged < 2 && tileRow < height) {
                 if (StaticData.TileArr[tileRow, tileCol].hasBomb && !StaticData.TileArr[tileRow, tileCol].flagged) {
                     FlagTile(tileRow, tileCol);
