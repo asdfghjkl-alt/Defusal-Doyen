@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8dd7b76a8d3540d799cfbae80b99362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
+  Sounds:
   - clip: {fileID: 8300000, guid: a9752a3ddf3e24757a859bd15145c5da, type: 3}
     name: Background Sound
     loop: 1

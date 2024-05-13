@@ -123,63 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &25253092
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1395879622726287003, guid: d50004de3bde34101a78d163d976b464, type: 3}
-      propertyPath: m_Name
-      value: AudioManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.7018961
-      objectReference: {fileID: 0}
-    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.8456836
-      objectReference: {fileID: 0}
-    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d50004de3bde34101a78d163d976b464, type: 3}
 --- !u!1 &116882800
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,19 +353,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2362151478767216376, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 170
+      value: 222.48
       objectReference: {fileID: 0}
     - target: {fileID: 2362151478767216376, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 40
+      value: 49.39
       objectReference: {fileID: 0}
     - target: {fileID: 2362151478767216376, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 4.71
       objectReference: {fileID: 0}
     - target: {fileID: 2362151478767216376, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 15
+      value: 12.81
       objectReference: {fileID: 0}
     - target: {fileID: 2959308254494785791, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
       propertyPath: m_Pivot.x
@@ -450,7 +393,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2959308254494785791, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 209.51
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 2959308254494785791, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
       propertyPath: m_SizeDelta.y
@@ -514,8 +457,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8930320207286818250, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
       propertyPath: m_text
-      value: The next tile clicked will be flagged if it is a bomb, and opened if
-        safe.
+      value: 'The next tile clicked will be flagged if it is a bomb, and opened if
+        safe. (Note: You can use multiple by clicking icon)'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1519,6 +1462,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 773012031}
     m_Modifications:
+    - target: {fileID: 2362151478767216376, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 13.8
+      objectReference: {fileID: 0}
     - target: {fileID: 2959308254494785791, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1549,7 +1496,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2959308254494785791, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 80.3
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 2959308254494785791, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1585,7 +1532,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2959308254494785791, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 110
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 2959308254494785791, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1606,6 +1553,11 @@ PrefabInstance:
     - target: {fileID: 6883337718735646680, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8930320207286818250, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
+      propertyPath: m_text
+      value: In a 3x3 grid, bomb tiles will be flagged, and non-bomb tiles will be
+        opened.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2001,7 +1953,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8930320207286818250, guid: 51dbb22614cf94bd3b075aec134fb4a1, type: 3}
       propertyPath: m_text
-      value: Opens a column of tiles
+      value: In a column of tiles, bomb tiles will be flagged, and non-bomb tiles
+        will be opened.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2790,8 +2743,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278255425
+  m_fontColor: {r: 0.25451612, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2858,6 +2811,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1169980896}
   m_CullTransparentMesh: 1
+--- !u!1001 &1237647167
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1395879622726287003, guid: d50004de3bde34101a78d163d976b464, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.7018961
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.8456836
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869339372997928993, guid: d50004de3bde34101a78d163d976b464, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d50004de3bde34101a78d163d976b464, type: 3}
 --- !u!1001 &1340273383
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3112,10 +3122,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c956eeedd28514676ad3be49a263abaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 5764904036242700848, guid: 6d8e9a7803223497e87a57b4ed5384f0, type: 3}
-  board: {fileID: 747897666}
-  tileSize: 0.8
-  timerText: {fileID: 1099605299}
+  TilePrefab: {fileID: 5764904036242700848, guid: 6d8e9a7803223497e87a57b4ed5384f0, type: 3}
+  Board: {fileID: 747897666}
+  TimerText: {fileID: 1099605299}
   PowerUpNoText:
   - {fileID: 597126879}
   - {fileID: 516724429}
@@ -3131,10 +3140,12 @@ MonoBehaviour:
   - {fileID: 597255521}
   SceneTransition: {fileID: 7231758575674490882}
   CameraShake: {fileID: 519420034}
+  tileSize: 0.8
   width: 20
   height: 20
-  noOfBombs: 60
+  noOfBombs: 85
   stopInteraction: 0
+  endedGame: 0
   usingAntiBomb: 0
   usingPlaneCho: 0
   bombTestersUsed: 0
@@ -3187,7 +3198,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.1
+  m_Intensity: 0.2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -4607,11 +4618,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4529111494616259807, guid: 16a62e4e5bed84610b6ba9c4035d18a0, type: 3}
       propertyPath: m_Intensity
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4529111494616259807, guid: 16a62e4e5bed84610b6ba9c4035d18a0, type: 3}
       propertyPath: m_PointLightOuterRadius
-      value: 12
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6482446922650401012, guid: 16a62e4e5bed84610b6ba9c4035d18a0, type: 3}
       propertyPath: m_Name
@@ -4756,5 +4767,5 @@ SceneRoots:
   - {fileID: 2143797410}
   - {fileID: 2733310232736802761}
   - {fileID: 1527516381}
-  - {fileID: 25253092}
   - {fileID: 7231758575674490881}
+  - {fileID: 1237647167}

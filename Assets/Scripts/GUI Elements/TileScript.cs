@@ -1,159 +1,275 @@
 using System.Collections.Generic;
-using System.IO.Compression;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
+// NOTE: for [SerializeField] the variable is assigned in the Unity Editor
+// EXTRA NOTE: active in Unity is whether the user can see that game object or not
+
+// Class for the prefab of the tile
 public class TileScript : MonoBehaviour
 {
-    [SerializeField] private Sprite unrevealedTile;
-    [SerializeField] private Sprite flaggedTile;
-    [SerializeField] private List<Sprite> revealedTiles;
-    [SerializeField] private Sprite bombTile;
-    [SerializeField] private Light2D tileLight;
-    [SerializeField] private GameObject tileLightObjRef;
-    [SerializeField] private GameObject tileLightHoverRef;
-    [SerializeField] private Light2D tileLightHover;
-    [SerializeField] private ParticleSystem ribbonParticles;
-    [SerializeField] private ParticleSystem ribbonParticlesDeath;
+    // Sprite for unrevealed tile
+    [SerializeField] private Sprite UnrevealedTileSpr;
 
-    GameManager gameManagerRef;
-    Animator cameraShake;
+    // Sprite for flagged tile
+    [SerializeField] private Sprite FlaggedTileSpr;
 
+    // 9 sprites of revealed tiles based on how many bombs are next to them
+    [SerializeField] private Sprite[] RevealedTilesSpr;
+
+    // Sprite for tile revealed to be a bomb
+    [SerializeField] private Sprite BombTileSpr;
+
+    // Sets component for light on tile when opened
+    // Component for setting attributes of the light
+    [SerializeField] private Light2D TileOpenLight;
+
+    // Sets component for light on tile when opened (Setting it to be active/visible)
+    [SerializeField] private GameObject TileOpenLightObjRef;
+
+    // Sets component for light on hovering on unopened tile (Setting it to be active/visible)
+    [SerializeField] private GameObject TileLightHoverRef;
+    // Allows for setting attributes to the light (e.g. colour)
+    [SerializeField] private Light2D TileLightHover;
+
+    // Allows for control over particle system when tile is opened and not a bomb
+    [SerializeField] private ParticleSystem RibbonParticles;
+
+    // Allows for control over particle system for when tile is opened and a bomb
+    [SerializeField] private ParticleSystem RibbonParticlesDeath;
+
+    // Allows for getting game manager to conduct functions (e.g. Opening Tile)
+    GameManager GameManagerRef;
+
+    // Gets Animator to set a trigger for camera shaking
+    Animator CameraShake;
+
+    // Row of tile on board
     [HideInInspector] public int tileRow;
 
+    // Column of tile on board
     [HideInInspector] public int tileCol;
 
-    [HideInInspector] public SpriteRenderer spriteRenderer; // Component to allow changing sprites
+    // Sprite Renderer component of tile
+    [HideInInspector] public SpriteRenderer SpriteRendRef; // Component to allow changing sprites
 
+    // Sets default color of a tile
     Color defaultColor = new Color(1f, 1f, 1f);
+
+    // Sets color of tile that is hovered over
     Color highlightedColor = new Color(0.4f, 0.4f, 1f);
 
     // Start is called before the first frame update
     void Start()
     {
-        gameManagerRef = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        cameraShake = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Animator>();
+        // Getting components for the tile object to access later
+        SpriteRendRef = GetComponent<SpriteRenderer>();
+        GameManagerRef = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        CameraShake = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Animator>();
     }
     private void OnMouseOver()
     {
-        TileData infoOnTile = StaticData.tileArr[tileRow, tileCol];
+        // Getting info on the tile
+        TileData infoOnTile = StaticData.TileArr[tileRow, tileCol];
 
-        if (!gameManagerRef.stopInteraction) {
+        // If interactions haven't been disabled
+        if (!GameManagerRef.stopInteraction) {
+
+            // If tile hasn't been revealed
             if (!infoOnTile.revealed) {
                 
-                if (!gameManagerRef.usingPlaneCho) {
-                    spriteRenderer.material.SetColor("_Color", highlightedColor);
+                // If using plane cho, for an improved effect
+                // Tile shouldn't change color
+                if (!GameManagerRef.usingPlaneCho) {
+                    // Setting color to highlighted colour
+                    SpriteRendRef.material.SetColor("_Color", highlightedColor);
                 }
-                
-                if (gameManagerRef.usingAntiBomb) {
-                    ChangeTileLight(Color.green, 0, 1.3f, 10);
-                } else if (gameManagerRef.usingPlaneCho) {
-                    gameManagerRef.ChangeColLights(tileCol, true);
-                } else if (gameManagerRef.bombTestersUsed > 0) {
-                    ChangeTileLight(Color.green, 0.2f, 2, 3);
-                } else {
-                    ChangeTileLight(Color.red, 0.3f, 2, 3);
+
+                // If the tile isn't flagged
+                if (!infoOnTile.flagged) {
+                    // Function ChangeTileLight changes tile light on hovering
+                    // Parameters: Colour, how much the light effect falls off,
+                    // How much should the light go outside the tile borders, 
+                    // And intensity of the light
+
+                    if (GameManagerRef.usingAntiBomb) {
+                        ChangeTileLight(Color.green, 0, 1.3f, 10);
+                    } else if (GameManagerRef.usingPlaneCho) {
+                        // Sends info of the column of the tile to the game manager
+                        // To make the whole column have green lights
+
+                        GameManagerRef.ChangeColLights(tileCol, true);
+                    } else if (GameManagerRef.bombTestersUsed > 0) {
+                        ChangeTileLight(Color.green, 0.2f, 2, 3);
+                    } else {
+                        ChangeTileLight(Color.red, 0.3f, 2, 3);
+                    }
                 }
             }
 
             if (Input.GetMouseButtonDown(0)) { // This means they left clicked a tile
+                // If the tile isn't flagged or revealed
                 if (!infoOnTile.flagged && !infoOnTile.revealed) {
+                    // Plays sound effect
                     FindObjectOfType<AudioManager>().PlaySound("Opening Tile");
 
-                    if (gameManagerRef.usingAntiBomb) {
-                        gameManagerRef.UseAntiBomb(tileRow, tileCol);
-                        cameraShake.SetTrigger("Opened_Blank");
+                    // Sees if player is using antibomb
+                    if (GameManagerRef.usingAntiBomb) {
+                        // Function in using Anti Bomb
+                        GameManagerRef.UseAntiBomb(tileRow, tileCol);
 
-                        gameManagerRef.CheckWinCondition();
-                    } else if (gameManagerRef.bombTestersUsed > 0) {
-                        gameManagerRef.UseBombTester(tileRow, tileCol);
+                        // Makes camera shake
+                        CameraShake.SetTrigger("Opened_Blank");
 
+                        // Checks win condition
+                        GameManagerRef.CheckWinCondition();
+                    } else if (GameManagerRef.bombTestersUsed > 0) {
+                        // Function using a Bomb Tester
+                        GameManagerRef.UseBombTester(tileRow, tileCol);
+
+                        // If adjacent tiles don't have bomb, shake camera
                         if (!infoOnTile.flagged && infoOnTile.bombsAdjacent == 0) {
-                            cameraShake.SetTrigger("Opened_Blank");
+                            CameraShake.SetTrigger("Opened_Blank");
                         }
-                    } else if (gameManagerRef.usingPlaneCho) {
-                        gameManagerRef.UsePlaneCho(tileCol);
-                        cameraShake.SetTrigger("Opened_Blank");
+                    } else if (GameManagerRef.usingPlaneCho) {
+                        // Function for using Plane Cho
+                        GameManagerRef.UsePlaneCho(tileCol);
+
+                        // Shakes Camera
+                        CameraShake.SetTrigger("Opened_Blank");
                     } else {
-                        gameManagerRef.OpenTile(tileRow, tileCol); // Function to reveal the tile
+                        GameManagerRef.OpenTile(tileRow, tileCol); // Function to reveal the tile
                         
                         if (!infoOnTile.hasBomb) {
+                            // If no bombs adjacent it, then shake camera
                             if (infoOnTile.bombsAdjacent == 0) {
-                                cameraShake.SetTrigger("Opened_Blank");
+                                CameraShake.SetTrigger("Opened_Blank");
                             }
 
-                            gameManagerRef.CheckWinCondition();
+                            // Checks win condition
+                            GameManagerRef.CheckWinCondition();
 
-                            if (!StaticData.won) {
+                            // Precaution to not let user go to question page
+                            // If game ended
+                            if (!GameManagerRef.endedGame) {
+                                // Generates actual randomness
                                 Random.InitState((int)System.DateTime.Now.Ticks);
 
+                                // Chance of 1/12 to get a question
                                 int RandomChance = Random.Range(0, 12);
 
                                 if (RandomChance == 0) {
-                                    StartCoroutine(gameManagerRef.Questioning());
+                                    // Starts function to transition to Question Page
+                                    StartCoroutine(GameManagerRef.Questioning());
                                 }
                             }
                         }
                     }
                 }
             } if (Input.GetMouseButtonDown(1) && !infoOnTile.revealed) { // This means they right clicked
+                // Play Sound of Flag
                 FindObjectOfType<AudioManager>().PlaySound("Flag");
-                gameManagerRef.FlagTile(tileRow, tileCol);
-                gameManagerRef.CheckWinCondition();
+
+                // Function to flag a tile, and checks if player won
+                GameManagerRef.FlagTile(tileRow, tileCol);
+                GameManagerRef.CheckWinCondition();
             }
         }
     }
 
     public void ChangeTileLight(Color lightColor, float lightFOIntensity, float lightFalloffSize, float lightIntensity) {
-        tileLightHoverRef.SetActive(true);
-        tileLightHover.color = lightColor;
-        tileLightHover.falloffIntensity = lightFOIntensity;
-        tileLightHover.shapeLightFalloffSize = lightFalloffSize;
-        tileLightHover.intensity = lightIntensity;
+        // Sets light to be active
+        TileLightHoverRef.SetActive(true);
+
+        // Sets Color
+        TileLightHover.color = lightColor;
+
+        // Sets how much the light effect fades away
+        TileLightHover.falloffIntensity = lightFOIntensity;
+
+        // Sets how much the light should go outside the borders
+        TileLightHover.shapeLightFalloffSize = lightFalloffSize;
+
+        // Intensity of light
+        TileLightHover.intensity = lightIntensity;
     }
 
     public void OnMouseExit() {
-        if (gameManagerRef.usingPlaneCho) {
-            gameManagerRef.ChangeColLights(tileCol, false);
+        if (GameManagerRef.usingPlaneCho) {
+            // Makes tiles in that previous column hovered over have no lights
+            GameManagerRef.ChangeColLights(tileCol, false);
         } else {
+            // Sets hover light to be inactive, and back to default colour
             ReturnTileNormal();
         }
     }
 
     public void ReturnTileNormal() {
-        tileLightHoverRef.SetActive(false);
-        spriteRenderer.material.SetColor("_Color", defaultColor);
+        // Setting hover light to be inactive
+        TileLightHoverRef.SetActive(false);
+
+        // Back to default color
+        SpriteRendRef.material.SetColor("_Color", defaultColor);
     }
 
     public void ChangeSprite(int state, bool ribbonEffects) {
-        tileLightHoverRef.SetActive(false);
-        spriteRenderer.material.SetColor("_Color", defaultColor);
+        // Sets hover light to be inactive
+        TileLightHoverRef.SetActive(false);
 
-        if (state == 0) {
-            // If the tile has a bomb, then change to bomb sprite
+        // Sets color to be default
+        SpriteRendRef.material.SetColor("_Color", defaultColor);
+
+        if (state == 0) { // Tile is a bomb
             if (ribbonEffects) {
-                ribbonParticlesDeath.Play();
+                // Plays ribbon/explosion effects
+                RibbonParticlesDeath.Play();
             }
-            spriteRenderer.sprite = bombTile;
-            tileLight.color = Color.white;
-            tileLight.intensity = 0.5f;
-            tileLightObjRef.SetActive(true);
+            // Change to bomb sprite
+            SpriteRendRef.sprite = BombTileSpr;
+
+            // Change light color to white
+            TileOpenLight.color = Color.white;
+
+            // Changes intensity of light
+            TileOpenLight.intensity = 0.6f;
+
+            // Sets the light to be active/visible
+            TileOpenLightObjRef.SetActive(true);
         } else if (state == 1) {
             if (ribbonEffects) {
-                ribbonParticles.Play();
+                // Plays ribbon effects on opening
+                RibbonParticles.Play();
             }
-            spriteRenderer.sprite = revealedTiles[StaticData.tileArr[tileRow, tileCol].bombsAdjacent];
-            tileLight.color = Color.blue;
-            tileLight.intensity = 1f;
-            tileLightObjRef.SetActive(true);
+
+            // Changes Sprite based on how many bombs are adjacent the tile
+            SpriteRendRef.sprite = RevealedTilesSpr[StaticData.TileArr[tileRow, tileCol].bombsAdjacent];
+
+            // Changes light color to be white
+            TileOpenLight.color = Color.white;
+
+            // Changes intensity
+            TileOpenLight.intensity = 0.6f;
+
+            // Sets the light to be visible/active
+            TileOpenLightObjRef.SetActive(true);
         } else if (state == 2) {
-            spriteRenderer.sprite = flaggedTile;
-            tileLight.color = new Color(0.1f, 0.5f, 1.0f);
-            tileLight.intensity = 2f;
-            tileLightObjRef.SetActive(true);
+            // Changes sprite to flagged tile sprite
+            SpriteRendRef.sprite = FlaggedTileSpr;
+
+            // Changes light color
+            TileOpenLight.color = new Color(0.1f, 0.5f, 1.0f);
+
+            // Changes light intensity
+            TileOpenLight.intensity = 2f;
+
+            // Sets light to be active/visible
+            TileOpenLightObjRef.SetActive(true);
         } else {
-            spriteRenderer.sprite = unrevealedTile;
-            tileLightObjRef.SetActive(false);
+            // Sets Sprite to be unrevealed sprite
+            SpriteRendRef.sprite = UnrevealedTileSpr;
+
+            // Sets light to be inactive
+            TileOpenLightObjRef.SetActive(false);
         }
     }
 }
