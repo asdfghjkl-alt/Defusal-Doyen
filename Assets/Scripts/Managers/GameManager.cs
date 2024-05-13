@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using System.Threading;
 
 // NOTE FOR WHOLE PROGRAM:
 // Defining "Class VariableName = some class" is by default a pointer in C#
@@ -550,34 +549,50 @@ public class GameManager : MonoBehaviour
             // While bomb flagger hasn't flagged 2 bombs or
             // if tileRow is out of bounds of board height
             while (bombsFlagged < 2 && tileRow < height) {
+
+                // If the tile currently looped through has a bomb and isn't already flagged
                 if (StaticData.TileArr[tileRow, tileCol].hasBomb && !StaticData.TileArr[tileRow, tileCol].flagged) {
+                    // Then flag the tile
                     FlagTile(tileRow, tileCol);
 
+                    // Tracks that One more bomb has been flagged by bomb flagger
                     bombsFlagged += 1;
                 }
 
+                // Adds 1 to iterate through column 
                 tileCol += 1;
 
+                // If the column is at the end of the board
                 if (tileCol == width) {
+                    // Reset value of tile column
                     tileCol = 0;
+
+                    // Go through new row
                     tileRow += 1;
                 }
             }
 
+            // Checks win condition
             CheckWinCondition();
         }
     }
 
     public void BombTesterClicked() {
+        // Checks if user has a bomb tester
         if (StaticData.PowerUpNo[2] > 0) {
+            // Tracks that user has used a bomb tester
             StaticData.PowerUpNo[2] -= 1;
-
+            
+            // Displays how many bomb testers the user has
             PowerUpNoText[2].text = StaticData.PowerUpNo[2].ToString() + "x";
 
+            // Tracks that 1 more bomb tester is being used
             bombTestersUsed += 1;
 
+            // Changes text to show that one more bomb tester is being used
             BombTestersUsedText.text = "Bomb Testers being used: " + bombTestersUsed.ToString();
 
+            // Sets all power up buttons but the bomb tester button
             for (int i = 0; i < 2; i++) {
                 PowerUpButtons[i].interactable = false;
             }
@@ -586,33 +601,44 @@ public class GameManager : MonoBehaviour
     }
 
     public void UseBombTester(int useRow, int useCol) {
+        // Tracks that user is using 1 less bomb tester
         bombTestersUsed -= 1;
 
+        // Changes text to show that one more bomb tester is being used
         BombTestersUsedText.text = "Bomb Testers being used: " + bombTestersUsed.ToString();
 
+        // If user is no longer using a bomb tester, set power up buttons to be active
         if (bombTestersUsed == 0) {
             for (int i = 0; i < 4; i++) {
                 PowerUpButtons[i].interactable = true;
             }
         }
 
+        // If the tile selected has a bomb, then flag it
         if (StaticData.TileArr[useRow, useCol].hasBomb) {
             FlagTile(useRow, useCol);
         } else {
+            // If it doesn't have a bomb, then open it
             OpenTile(useRow, useCol);
         }
 
+        // Checks if user has won
         CheckWinCondition();
     }
 
     public void PlaneChoClicked() {
+        // Checks if user has Plane Cho
         if (StaticData.PowerUpNo[3] > 0) {
+            // Tracks that user has used Plane Cho
             StaticData.PowerUpNo[3] -= 1;
 
+            // Displays how many "Plane Cho" power up the user has
             PowerUpNoText[3].text = StaticData.PowerUpNo[3].ToString() + "x";
 
+            // Tracks that player is using Plane Cho
             usingPlaneCho = true;
 
+            // Sets power up buttons to be non-interactable
             for (int i = 0; i < 4; i++) {
                 PowerUpButtons[i].interactable = false;
             }
@@ -620,100 +646,139 @@ public class GameManager : MonoBehaviour
     }
 
     public void UsePlaneCho(int useCol) {
-        
+        // Sets power up buttons to be interactable
         for (int i = 0; i < 4; i++) {
             PowerUpButtons[i].interactable = true;
         }
 
+        // Tracks that player is no longer using "Plane Cho"
         usingPlaneCho = false;
 
+        // Iterates through rows of the column selected
         for (int row = 0; row < height; row++) {
+            
+            // Gets data on the tile at the position
             TileData selectedTile = StaticData.TileArr[row, useCol];
 
+            // If tile hasn't been revealed
             if (!selectedTile.revealed) {
-                if (selectedTile.hasBomb ) {
+
+                if (selectedTile.hasBomb) {
+                    // If the tile has a bomb, and hasn't been flagged
+                    // Then flag it
                     if (!selectedTile.flagged) {
                         FlagTile(row, useCol);
                     }
                 } else {
+                    // If the tile doesn't have a bomb, then open the tile
                     OpenTile(row, useCol);
                 }
             }
         }
 
+        // Checks if user has won
         CheckWinCondition();
     }
 
     public IEnumerator Questioning() {
+        // Tells program not to reset data on reentry
         StaticData.reset = false;
+
+        // Stops user from interacting with tiles
         stopInteraction = true;
 
+        // Sets the power-up buttons to be non-interactable
         for (int i = 0; i < 4; i++) {
-            PowerUpButtons[i].interactable = true;
+            PowerUpButtons[i].interactable = false;
         }
 
+        // Sets scen transition animation
         SceneTransition.SetTrigger("Start");
 
+        // Waits for animation to be over until moving to next scene
         yield return new WaitForSeconds(1f);
-
         SceneManager.LoadScene("Question");
     }
 
     public IEnumerator RevealBombs() {
+        // Variable determining how many bombs should be revealed at once
         int bombRevealedPerTime = 1;
 
+        // Ensures random generation
         Random.InitState((int) System.DateTime.Now.Ticks);
 
+        // Iterates through the board
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
+                // Checks if the tile at the position isn't revealed
                 if (!StaticData.TileArr[row, col].revealed) {
-
+                    // Checks if the tile is a bomb and isn't flagged
                     if (StaticData.TileArr[row, col].hasBomb && !StaticData.TileArr[row, col].flagged) {
                         bombRevealedPerTime -= 1;
+                        // Tracks that one more bomb has been revealed in the cycle
+
+                        // Changes sprite to a bomb sprite
                         TileObjRef[row, col].ChangeSprite(0, true);
 
                         if (bombRevealedPerTime == 0) {
+                            // All bombs that needed to be revealed in a cycle
+                            // Have been revealed
+
+                            // Waits for 0.5s before opening more bombs
                             yield return new WaitForSeconds(0.5f);
+                            // Plays boom effect
                             FindObjectOfType<AudioManager>().PlaySound("Boom");
 
+                            // Randomises how many bombs are revealed per time
                             bombRevealedPerTime = Random.Range(1, 8);
                         }
                     } else if (!StaticData.TileArr[row, col].hasBomb && StaticData.TileArr[row, col].flagged) {
+                        // If the tile doesn't have a bomb and is flagged
+                        // Change sprite to open tile
                         TileObjRef[row, col].ChangeSprite(3, false);
                     }
                 }
             }
         }
 
+        // Wait for 2 seconds before activating scene transition animation
         yield return new WaitForSeconds(2f);
-
         SceneTransition.SetTrigger("Start");
 
-        yield return new WaitForSeconds(1f);
+        // Waits for animation to be over before loading the End Game Lose Page
 
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("End Game Lose");
     }
 
     public IEnumerator MoveToWinScreen() {
+        // Plays sound that user has won
         FindObjectOfType<AudioManager>().PlaySound("Correct");
+        // Waits for sound to be over
         yield return new WaitForSeconds(0.5f);
 
+        // Activates Scene Transition Animator and waits for animation to be over
         SceneTransition.SetTrigger("Start");
-
         yield return new WaitForSeconds(1f);
 
+        // Loads End Game Win Page
         SceneManager.LoadScene("End Game Win");
     }
 
     public void ChangeColLights(int useCol, bool turnOn) {
         if (turnOn) {
+            // If lights are to be turned on
             for (int row = 0; row < height; row++) {
+                // For every non-revealed tile in the column
+                // Change the tile light to be green and other effects
                 if (!StaticData.TileArr[row, useCol].revealed) {
                     TileObjRef[row, useCol].ChangeTileLight(Color.green, 0.9f, 2, 3);
                 }
             }
         } else {
+            // If lights are to be turned off
             for (int row = 0; row < height; row++) {
+                // For every non-revealed tile in the column, turn tile light off
                 if (!StaticData.TileArr[row, useCol].revealed) {
                     TileObjRef[row, useCol].ReturnTileNormal();
                 }
