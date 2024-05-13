@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -38,6 +39,9 @@ public class TileScript : MonoBehaviour
     // Allows for control over particle system for when tile is opened and a bomb
     [SerializeField] private ParticleSystem RibbonParticlesDeath;
 
+    // Component to allow changing sprites
+    [SerializeField] private SpriteRenderer SpriteRendRef;
+
     // Allows for getting game manager to conduct functions (e.g. Opening Tile)
     GameManager GameManagerRef;
 
@@ -50,8 +54,6 @@ public class TileScript : MonoBehaviour
     // Column of tile on board
     [HideInInspector] public int tileCol;
 
-    // Sprite Renderer component of tile
-    [HideInInspector] public SpriteRenderer SpriteRendRef; // Component to allow changing sprites
 
     // Sets default color of a tile
     Color defaultColor = new Color(1f, 1f, 1f);
@@ -63,7 +65,6 @@ public class TileScript : MonoBehaviour
     void Start()
     {
         // Getting components for the tile object to access later
-        SpriteRendRef = GetComponent<SpriteRenderer>();
         GameManagerRef = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         CameraShake = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Animator>();
     }

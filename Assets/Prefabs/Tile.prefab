@@ -121,9 +121,9 @@ MonoBehaviour:
   TileLightHover: {fileID: 3266079409753871190}
   RibbonParticles: {fileID: 4593636218584205432}
   RibbonParticlesDeath: {fileID: 625643786228750887}
+  SpriteRendRef: {fileID: 7643065808328549754}
   tileRow: 0
   tileCol: 0
-  spriteRenderer: {fileID: 0}
 --- !u!61 &7791251377603817552
 BoxCollider2D:
   m_ObjectHideFlags: 0
