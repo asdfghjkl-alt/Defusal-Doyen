@@ -7,17 +7,6 @@ public class MainMenu : MonoBehaviour
     // Sets animator for scene transition
     [SerializeField] private Animator SceneTransition;
 
-    // Start is called before the first frame update
-
-    public void Start() {
-        // Sets screen resolution based on user's platform
-        if (Application.platform == RuntimePlatform.WindowsPlayer) {
-            Screen.SetResolution( 1600, 900, FullScreenMode.Windowed);
-        } else {
-            Screen.SetResolution( 1920, 1080, FullScreenMode.Windowed);
-        }
-    }
-
     // Functions to go to different pages
     public void StartGame() {
         StartCoroutine(waitLoadingScene("Main Game"));
