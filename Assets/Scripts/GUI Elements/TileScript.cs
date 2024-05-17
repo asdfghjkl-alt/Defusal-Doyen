@@ -155,13 +155,12 @@ public class TileScript : MonoBehaviour
                                 // Generates actual randomness
                                 Random.InitState((int)System.DateTime.Now.Ticks);
 
-                                // Chance of 1/15 to get a question
-                                int RandomChance = Random.Range(0, 15);
-
-                                StaticData.QuestionsAnswered += 1;
+                                // Chance of 1/12 to get a question
+                                int RandomChance = Random.Range(0, 12);
 
                                 if (RandomChance == 0) {
                                     // Starts function to transition to Question Page
+                                    StaticData.QuestionsAnswered += 1;
                                     StartCoroutine(GameManagerRef.Questioning());
                                 }
                             }
