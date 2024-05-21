@@ -79,7 +79,16 @@ public class QuestionManager : MonoBehaviour
 
         // Randomly generates the question number for which question
         // The user should answer
-        questionNum = Random.Range(0, 44);
+
+        bool foundUnansweredQ = false;
+
+        while (!foundUnansweredQ) {
+            questionNum = Random.Range(0, 44);
+            if (!StaticData.AnsweredQs[questionNum]) {
+                foundUnansweredQ = true;
+                StaticData.AnsweredQs[questionNum] = true;
+            }
+        }
 
         // Displays the Question Prompt/Description
         QuestionDescText.text = QuestionDesc[questionNum];

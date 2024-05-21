@@ -94,10 +94,11 @@ public class TileScript : MonoBehaviour
                     if (GameManagerRef.usingAntiBomb) {
                         ChangeTileLight(Color.green, 0, 1.3f, 10);
                     } else if (GameManagerRef.usingPlaneCho) {
+                        GameManagerRef.tileColHover = tileCol;
+                        GameManagerRef.tileRowHover = tileRow;
                         // Sends info of the column of the tile to the game manager
                         // To make the whole column have green lights
-
-                        GameManagerRef.ChangeColLights(tileCol, true);
+                        GameManagerRef.ChangeRowColLights(tileRow, tileCol, true);
                     } else if (GameManagerRef.bombTestersUsed > 0) {
                         ChangeTileLight(Color.green, 0.2f, 2, 3);
                     } else {
@@ -132,7 +133,7 @@ public class TileScript : MonoBehaviour
                         }
                     } else if (GameManagerRef.usingPlaneCho) {
                         // Function for using Plane Cho
-                        GameManagerRef.UsePlaneCho(tileCol);
+                        GameManagerRef.UsePlaneCho(tileRow, tileCol);
 
                         // Shakes Camera
                         CameraShake.SetTrigger("Opened_Blank");
@@ -150,7 +151,7 @@ public class TileScript : MonoBehaviour
 
                             // Precaution to not let user go to question page
                             // If game ended
-                            if (!GameManagerRef.endedGame) {
+                            if (!GameManagerRef.endedGame && StaticData.QuestionsAnswered < 20) {
                                 // Generates actual randomness
                                 Random.InitState((int)System.DateTime.Now.Ticks);
 
@@ -159,6 +160,7 @@ public class TileScript : MonoBehaviour
 
                                 if (RandomChance == 0) {
                                     // Starts function to transition to Question Page
+                                    StaticData.QuestionsAnswered += 1;
                                     StartCoroutine(GameManagerRef.Questioning());
                                 }
                             }
@@ -196,7 +198,7 @@ public class TileScript : MonoBehaviour
     public void OnMouseExit() {
         if (GameManagerRef.usingPlaneCho) {
             // Makes tiles in that previous column hovered over have no lights
-            GameManagerRef.ChangeColLights(tileCol, false);
+            GameManagerRef.ChangeRowColLights(tileRow, tileCol, false);
         } else {
             // Sets hover light to be inactive, and back to default colour
             ReturnTileNormal();

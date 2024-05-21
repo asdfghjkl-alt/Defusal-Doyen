@@ -72,6 +72,12 @@ public class GameManager : MonoBehaviour
     // Variable to track how many bomb testers the user is currently using
     [HideInInspector] public int bombTestersUsed = 0;
 
+    // Variable determining if Plane Cho is being used in column or row
+    bool isCol = true;
+
+    public int tileRowHover;
+    public int tileColHover;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -89,6 +95,11 @@ public class GameManager : MonoBehaviour
             StaticData.userFirstInput = false;
             StaticData.timer = 0;
             StaticData.noOfFlags = 0;
+            StaticData.QuestionsAnswered = 0;
+
+            for (int i = 0; i < 44; i++) {
+                StaticData.AnsweredQs[i] = false;
+            }
 
             for (int i = 0; i < 4; i++) {
                 PowerUpButtons[i].interactable = false;
@@ -119,9 +130,16 @@ public class GameManager : MonoBehaviour
         StaticData.reset = true;
     }
 
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Z) && usingPlaneCho) {
+            ChangeRowColLights(tileRowHover, tileColHover, false);
+            isCol = !isCol;
+        }
+    }
+
     // This is a default function in unity that calls once every 0.02s
     void FixedUpdate() {
-        if (!endedGame){
+        if (!endedGame) {
             StaticData.timer += Time.fixedDeltaTime;
             // Updating the timer
 
@@ -645,7 +663,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void UsePlaneCho(int useCol) {
+    public void UsePlaneCho(int useRow, int useCol) {
         // Sets power up buttons to be interactable
         for (int i = 0; i < 4; i++) {
             PowerUpButtons[i].interactable = true;
@@ -654,24 +672,48 @@ public class GameManager : MonoBehaviour
         // Tracks that player is no longer using "Plane Cho"
         usingPlaneCho = false;
 
-        // Iterates through rows of the column selected
-        for (int row = 0; row < height; row++) {
-            
-            // Gets data on the tile at the position
-            TileData selectedTile = StaticData.TileArr[row, useCol];
+        if (isCol) {
+            // Iterates through rows of the column selected
+            for (int row = 0; row < height; row++) {
+                
+                // Gets data on the tile at the position
+                TileData selectedTile = StaticData.TileArr[row, useCol];
 
-            // If tile hasn't been revealed
-            if (!selectedTile.revealed) {
+                // If tile hasn't been revealed
+                if (!selectedTile.revealed) {
 
-                if (selectedTile.hasBomb) {
-                    // If the tile has a bomb, and hasn't been flagged
-                    // Then flag it
-                    if (!selectedTile.flagged) {
-                        FlagTile(row, useCol);
+                    if (selectedTile.hasBomb) {
+                        // If the tile has a bomb, and hasn't been flagged
+                        // Then flag it
+                        if (!selectedTile.flagged) {
+                            FlagTile(row, useCol);
+                        }
+                    } else {
+                        // If the tile doesn't have a bomb, then open the tile
+                        OpenTile(row, useCol);
                     }
-                } else {
-                    // If the tile doesn't have a bomb, then open the tile
-                    OpenTile(row, useCol);
+                }
+            }
+        } else {
+            // Iterates through columns of the row selected
+            for (int col = 0; col < width; col++) {
+                
+                // Gets data on the tile at the position
+                TileData selectedTile = StaticData.TileArr[useRow, col];
+
+                // If tile hasn't been revealed
+                if (!selectedTile.revealed) {
+
+                    if (selectedTile.hasBomb) {
+                        // If the tile has a bomb, and hasn't been flagged
+                        // Then flag it
+                        if (!selectedTile.flagged) {
+                            FlagTile(useRow, col);
+                        }
+                    } else {
+                        // If the tile doesn't have a bomb, then open the tile
+                        OpenTile(useRow, col);
+                    }
                 }
             }
         }
@@ -765,22 +807,44 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("End Game Win");
     }
 
-    public void ChangeColLights(int useCol, bool turnOn) {
+    public void ChangeRowColLights(int useRow, int useCol, bool turnOn) {
         if (turnOn) {
             // If lights are to be turned on
-            for (int row = 0; row < height; row++) {
-                // For every non-revealed tile in the column
-                // Change the tile light to be green and other effects
-                if (!StaticData.TileArr[row, useCol].revealed) {
-                    TileObjRef[row, useCol].ChangeTileLight(Color.green, 0.9f, 2, 3);
+            if (isCol) {
+                for (int row = 0; row < height; row++) {
+                    // For every non-revealed tile in the column
+                    // Change the tile light to be green and other effects
+                    if (!StaticData.TileArr[row, useCol].revealed) {
+                        TileObjRef[row, useCol].ChangeTileLight(Color.green, 0.9f, 2, 3);
+                    }
+                }
+            } else {
+                for (int col = 0; col < height; col++) {
+                    // For every non-revealed tile in the column
+                    // Change the tile light to be green and other effects
+                    if (!StaticData.TileArr[useRow, col].revealed) {
+                        TileObjRef[useRow, col].ChangeTileLight(Color.green, 0.9f, 2, 3);
+                    }
                 }
             }
         } else {
             // If lights are to be turned off
-            for (int row = 0; row < height; row++) {
-                // For every non-revealed tile in the column, turn tile light off
-                if (!StaticData.TileArr[row, useCol].revealed) {
-                    TileObjRef[row, useCol].ReturnTileNormal();
+
+            if (isCol) {
+                for (int row = 0; row < height; row++) {
+                    // For every non-revealed tile in the column
+                    // Change the tile light to be green and other effects
+                    if (!StaticData.TileArr[row, useCol].revealed) {
+                        TileObjRef[row, useCol].ReturnTileNormal();
+                    }
+                }
+            } else {
+                for (int col = 0; col < height; col++) {
+                    // For every non-revealed tile in the column
+                    // Change the tile light to be green and other effects
+                    if (!StaticData.TileArr[useRow, col].revealed) {
+                        TileObjRef[useRow, col].ReturnTileNormal();
+                    }
                 }
             }
         }

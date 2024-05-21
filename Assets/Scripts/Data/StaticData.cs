@@ -26,6 +26,12 @@ public class StaticData : MonoBehaviour
     // Tracks how many of each power up the user has
     public static int[] PowerUpNo = new int[4];
 
+    // Tracks which questions the user has answered
+    // True for answered, False for not
+    public static bool[] AnsweredQs = new bool[44];
+
+    public static int QuestionsAnswered = 0;
+
     // Tracks if background music is to be on
     public static bool soundOn = true;
 }
