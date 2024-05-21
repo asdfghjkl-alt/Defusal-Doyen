@@ -86,6 +86,7 @@ public class QuestionManager : MonoBehaviour
             questionNum = Random.Range(0, 44);
             if (!StaticData.AnsweredQs[questionNum]) {
                 foundUnansweredQ = true;
+                StaticData.AnsweredQs[questionNum] = true;
             }
         }
 
