@@ -34,4 +34,6 @@ public class StaticData : MonoBehaviour
 
     // Tracks if background music is to be on
     public static bool soundOn = true;
+
+    public static string difficulty = "E";
 }

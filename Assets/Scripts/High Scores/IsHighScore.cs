@@ -12,7 +12,7 @@ public class IsHighScore : MonoBehaviour
 
 
         // Path for High Scores File
-        string path = Application.dataPath + "/HighScoresData/HighScores.txt";
+        string path = Application.dataPath + "/HighScoresData/HighScores" + StaticData.difficulty + ".txt";
 
         if (!File.Exists(path)) {
             // Create directory HighScoresData if directory doesn't exist

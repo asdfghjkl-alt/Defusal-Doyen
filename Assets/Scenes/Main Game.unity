@@ -3671,9 +3671,7 @@ MonoBehaviour:
   SceneTransition: {fileID: 7231758575674490882}
   CameraShake: {fileID: 519420034}
   tileSize: 0.8
-  width: 20
-  height: 20
-  noOfBombs: 75
+  noOfBombs: 80
   stopInteraction: 0
   endedGame: 0
   usingAntiBomb: 0

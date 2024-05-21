@@ -45,10 +45,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float tileSize;
 
     // Width of board
-    [SerializeField] private int width;
+    private int width;
 
     // Height of board
-    [SerializeField] private int height;
+    private int height;
 
     // Number of bombs to place on board
     [SerializeField] private int noOfBombs;
@@ -81,17 +81,26 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (StaticData.difficulty == "E") {
+            width = 18;
+            height = 15;
+            noOfBombs = 55;
+        } else if (StaticData.difficulty == "H") {
+            width = 20;
+            height = 20;
+            noOfBombs = 80;
+        }
         // Creating a function to create an initial game board
 
         NumberOfBombsText.text = "Total Bombs: " + noOfBombs;
         
         // Allows the program to control the sprites of tiles
-        TileObjRef = new TileScript[width, height];
+        TileObjRef = new TileScript[height, width];
 
         // If the game is to be reset (Not going back from question page)
         if (StaticData.reset) {
             // All data is reset to initial status
-            StaticData.TileArr = new TileData[width, height];
+            StaticData.TileArr = new TileData[height, width];
             StaticData.userFirstInput = false;
             StaticData.timer = 0;
             StaticData.noOfFlags = 0;
@@ -819,7 +828,7 @@ public class GameManager : MonoBehaviour
                     }
                 }
             } else {
-                for (int col = 0; col < height; col++) {
+                for (int col = 0; col < width; col++) {
                     // For every non-revealed tile in the column
                     // Change the tile light to be green and other effects
                     if (!StaticData.TileArr[useRow, col].revealed) {
@@ -839,7 +848,7 @@ public class GameManager : MonoBehaviour
                     }
                 }
             } else {
-                for (int col = 0; col < height; col++) {
+                for (int col = 0; col < width; col++) {
                     // For every non-revealed tile in the column
                     // Change the tile light to be green and other effects
                     if (!StaticData.TileArr[useRow, col].revealed) {
