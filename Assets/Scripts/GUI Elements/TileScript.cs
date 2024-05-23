@@ -159,9 +159,9 @@ public class TileScript : MonoBehaviour
                                 int randomChance;
 
                                 if (StaticData.difficulty == "E") {
-                                    randomChance = Random.Range(0, 15);
-                                } else {
                                     randomChance = Random.Range(0, 12);
+                                } else {
+                                    randomChance = Random.Range(0, 14);
                                 }
 
                                 if (randomChance == 0) {
