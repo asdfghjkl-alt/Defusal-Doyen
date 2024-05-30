@@ -9,11 +9,23 @@ public class HighScores : MonoBehaviour
     // Text for high scores
     [SerializeField] private TMP_Text[] HighScoreText;
 
+    [SerializeField] private TMP_Text BannerText;
+
     // Start is called before the first frame update
     void Start()
     {
+        GetHighScoreData("E");
+    }
+
+    public void GetHighScoreData(string mode) {
+        if (mode == "E") {
+            BannerText.text = "High Scores (Easy)";
+        } else if (mode == "H") {
+            BannerText.text = "High Scores (Hard)";
+        }
+
         // Path of the High Scores File
-        string path = Application.dataPath + "/HighScoresData/HighScores.txt";
+        string path = Application.dataPath + "/HighScoresData/HighScores" + mode + ".txt";
 
         // If file doesn't exist in that path
         if (!File.Exists(path)) {

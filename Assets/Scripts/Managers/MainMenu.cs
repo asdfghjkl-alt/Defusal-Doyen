@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
 
     // Functions to go to different pages
     public void StartGame() {
-        StartCoroutine(waitLoadingScene("Main Game"));
+        StartCoroutine(waitLoadingScene("Difficulty Selection"));
     }
 
     public void GoToHighScores() {
@@ -26,6 +26,11 @@ public class MainMenu : MonoBehaviour
 
     public void Quit() {
         Application.Quit();
+    }
+
+    public void SelectedDifficulty(string mode) {
+        StaticData.difficulty = mode;
+        StartCoroutine(waitLoadingScene("Main Game"));
     }
 
     // Opens a tutorial page at the index
