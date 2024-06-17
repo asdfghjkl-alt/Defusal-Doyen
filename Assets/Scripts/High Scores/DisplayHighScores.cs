@@ -9,18 +9,22 @@ public class HighScores : MonoBehaviour
     // Text for high scores
     [SerializeField] private TMP_Text[] HighScoreText;
 
+    // Text for the banner
     [SerializeField] private TMP_Text BannerText;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Initially gets Easy Mode Scores
         GetHighScoreData("E");
     }
 
     public void GetHighScoreData(string mode) {
         if (mode == "E") {
+            // If mode chosen is easy, then then change banner text
             BannerText.text = "High Scores (Easy)";
         } else if (mode == "H") {
+            // If mode chosen is hard, then then change banner text
             BannerText.text = "High Scores (Hard)";
         }
 

@@ -86,22 +86,31 @@ public class TileScript : MonoBehaviour
 
                 // If the tile isn't flagged
                 if (!infoOnTile.flagged) {
-                    // Function ChangeTileLight changes tile light on hovering
+                    // Function ChangeTileLight (defined below) changes tile light on hovering
                     // Parameters: Colour, how much the light effect falls off,
                     // How much should the light go outside the tile borders, 
                     // And intensity of the light
 
                     if (GameManagerRef.usingAntiBomb) {
+                        // Changes tiles to green, has light surrounding 8
+                        // Adjacent tiles
                         ChangeTileLight(Color.green, 0, 1.3f, 10);
                     } else if (GameManagerRef.usingPlaneCho) {
+                        // Retains this information to tell game which
+                        // Tile is being hovered over when using Plane Cho
+                        // To accurately display lights on tiles when being switched
+                        // From row to column
                         GameManagerRef.tileColHover = tileCol;
                         GameManagerRef.tileRowHover = tileRow;
+
                         // Sends info of the column of the tile to the game manager
                         // To make the whole column have green lights
                         GameManagerRef.ChangeRowColLights(tileRow, tileCol, true);
                     } else if (GameManagerRef.bombTestersUsed > 0) {
+                        // Changes the tile light to be green when using bomb tester
                         ChangeTileLight(Color.green, 0.2f, 2, 3);
                     } else {
+                        // Red when no power up is being used
                         ChangeTileLight(Color.red, 0.3f, 2, 3);
                     }
                 }
@@ -155,12 +164,13 @@ public class TileScript : MonoBehaviour
                                 // Generates actual randomness
                                 Random.InitState((int)System.DateTime.Now.Ticks);
 
-                                // Chance of 1/12 to get a question
                                 int randomChance;
 
+                                // Chance of 1/12 to get a question for Easy
                                 if (StaticData.difficulty == "E") {
                                     randomChance = Random.Range(0, 12);
                                 } else {
+                                    // Chance of 1/14 to get a question for Hard
                                     randomChance = Random.Range(0, 14);
                                 }
 

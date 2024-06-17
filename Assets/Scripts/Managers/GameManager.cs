@@ -75,12 +75,15 @@ public class GameManager : MonoBehaviour
     // Variable determining if Plane Cho is being used in column or row
     bool isCol = true;
 
+    // Retains information on which tile is being hovered over
+    // When using Plane Cho (To switch lights from the row to the column)
     public int tileRowHover;
     public int tileColHover;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Sets board parameters based on difficulty
         if (StaticData.difficulty == "E") {
             width = 18;
             height = 15;
@@ -110,6 +113,7 @@ public class GameManager : MonoBehaviour
                 StaticData.AnsweredQs[i] = false;
             }
 
+            // Sets buttons to be initially non-interactable
             for (int i = 0; i < 4; i++) {
                 PowerUpButtons[i].interactable = false;
             }
@@ -141,7 +145,13 @@ public class GameManager : MonoBehaviour
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Z) && usingPlaneCho) {
+            // Checks for when using Plane Cho power up, and user presses
+            // Z to change between row and col
+            // Changes lights to display row/col
             ChangeRowColLights(tileRowHover, tileColHover, false);
+
+            // Variable that determines if Plane Cho is being used
+            // On a column or a row
             isCol = !isCol;
         }
     }
@@ -211,8 +221,7 @@ public class GameManager : MonoBehaviour
                 // To allow changing sprite
                 TileScript selectedTileObj = TileObjRef[row, col];
 
-                // Choosing what sprite to change the tile to based on 
-                // Its information
+                // Choosing what sprite to change the tile to based on its information
 
                 // Check the TileScript ChangeSprite() function for more info
                 if (selectedTile.revealed) {
@@ -293,8 +302,10 @@ public class GameManager : MonoBehaviour
     bool isValidPos(int _row, int _col) {
         // Checking if the row and column are in range of board
         if (_row < 0 || _row > height - 1 || _col < 0 || _col > width - 1) {
+            // False if not valid
             return false;
         } else {
+            // True if valid
             return true;
         }
     }
@@ -486,6 +497,7 @@ public class GameManager : MonoBehaviour
 
     // Powerup Functionality
 
+    // When icon for Anti Bomb Clicked
     public void AntiBombClicked() {
         // Checks if user actually has that Anti Bomb
         if (StaticData.PowerUpNo[0] > 0) {
@@ -505,6 +517,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // When Anti Bomb is actually used
     public void UseAntiBomb(int useRow, int useCol) {
         // User is no longer using anti bomb
         usingAntiBomb = false;
@@ -553,6 +566,7 @@ public class GameManager : MonoBehaviour
         CheckWinCondition();
     }
 
+    // When Bomb Flagger Icon is clicked
     public void UseBombFlagger() {
         // Checks if user actually has a Bomb Flagger
         if (StaticData.PowerUpNo[1] > 0) {
@@ -604,6 +618,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // When Bomb Tester icon is clicked
     public void BombTesterClicked() {
         // Checks if user has a bomb tester
         if (StaticData.PowerUpNo[2] > 0) {
@@ -627,6 +642,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // When Bomb Tester is used on the board
     public void UseBombTester(int useRow, int useCol) {
         // Tracks that user is using 1 less bomb tester
         bombTestersUsed -= 1;

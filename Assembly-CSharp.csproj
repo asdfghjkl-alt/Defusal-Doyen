@@ -135,10 +135,6 @@
     <None Include="Assets/HighScoresData/HighScoresH.txt" />
     <None Include="Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" />
-<<<<<<< HEAD
-    <None Include="Assets/Highscores.txt" />
-=======
->>>>>>> feedback
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader" />
     <None Include="Assets/QuestionData.txt" />

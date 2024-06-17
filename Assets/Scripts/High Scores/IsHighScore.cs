@@ -72,6 +72,7 @@ public class IsHighScore : MonoBehaviour
                 }
             }
 
+            // To go through all indexes of high scores
             index += 1;
         }
 
