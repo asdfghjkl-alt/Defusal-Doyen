@@ -753,20 +753,20 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'There is a 1/20 Chance opening a non-bomb tile will lead you to the guardian
-    of the temple who will ask you a question.
+  m_text: 'There is a 1/12 (Easy), 1/14 (Hard) Chance opening a non-bomb tile will
+    lead you to the guardian of the temple who will ask you a question.
 
 
-    The Questions will be a variety
-    of Subjects Including:
+    The
+    Questions will be a variety of Subjects Including:
 
 
     English
 
-    Software Design and development
+    Software
+    Design and development
 
-    Physical
-    Education
+    Physical Education
 
     Math
 
@@ -775,8 +775,8 @@ MonoBehaviour:
     General
 
 
-    Getting A question right
-    will give you a random Powerup.'
+    Getting
+    A question right will give you a random Powerup.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}

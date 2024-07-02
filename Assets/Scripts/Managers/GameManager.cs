@@ -189,7 +189,7 @@ public class GameManager : MonoBehaviour
                 float xPos = col - (width - 1) / 2;
 
                 // E.g. 3x3 grid, at row 0, y Position will be at 1, hence float(width - 1) / 2
-                // As row increases by 1, y Position will decrease by 1, hence sutracting the row to y Position
+                // As row increases by 1, y Position will decrease by 1, hence subtracting the row to y Position
                 float yPos = (height - 1) / 2 - row;
 
                 // Setting actual position in terms of tile's dimensions
@@ -387,7 +387,7 @@ public class GameManager : MonoBehaviour
             // Play sound effect of a boom
             FindObjectOfType<AudioManager>().PlaySound("Boom");
 
-            // Tells that program shold stop interaction of tiles
+            // Tells that program should stop interaction of tiles
             stopInteraction = true;
 
             // Game has ended
@@ -759,7 +759,7 @@ public class GameManager : MonoBehaviour
             PowerUpButtons[i].interactable = false;
         }
 
-        // Sets scen transition animation
+        // Sets scene transition animation
         SceneTransition.SetTrigger("Start");
 
         // Waits for animation to be over until moving to next scene

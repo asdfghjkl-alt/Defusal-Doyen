@@ -4,8 +4,7 @@ using UnityEngine;
 // This is called in the End Game Win Screen
 public class DisplayTime : MonoBehaviour
 {
-    // Reference to the Timer Text and assigned in Unity Editor
-    // Allows setting text on the Timer Text
+    // Reference to the Timer Text and is assigned in the Unity Editor. Allows setting text on the Timer Text
     [SerializeField] private TMP_Text TimerText;
  
     // Start is called before the first frame update

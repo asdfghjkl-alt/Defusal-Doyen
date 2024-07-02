@@ -508,7 +508,6 @@ GameObject:
   - component: {fileID: 5698406393518957086}
   - component: {fileID: 625643786228750887}
   - component: {fileID: 1951920826512826120}
-  - component: {fileID: 1762511715453111130}
   m_Layer: 0
   m_Name: Ribbons_Death
   m_TagString: Untagged
@@ -5387,19 +5386,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &1762511715453111130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4501971304629232699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70de38779529742ffa3d9fe13d26b6a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Prefab: {fileID: 529270057858028588}
 --- !u!1 &5552587689094248554
 GameObject:
   m_ObjectHideFlags: 0
@@ -5411,7 +5397,6 @@ GameObject:
   - component: {fileID: 8891983175090352177}
   - component: {fileID: 4593636218584205432}
   - component: {fileID: 3630084330295008050}
-  - component: {fileID: 7130017581347240536}
   m_Layer: 0
   m_Name: Ribbons
   m_TagString: Untagged
@@ -10290,16 +10275,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &7130017581347240536
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5552587689094248554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70de38779529742ffa3d9fe13d26b6a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Prefab: {fileID: 943962060985799012}
