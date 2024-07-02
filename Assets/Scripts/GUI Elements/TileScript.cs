@@ -129,9 +129,6 @@ public class TileScript : MonoBehaviour
 
                         // Makes camera shake
                         CameraShake.SetTrigger("Opened_Blank");
-
-                        // Checks win condition
-                        GameManagerRef.CheckWinCondition();
                     } else if (GameManagerRef.bombTestersUsed > 0) {
                         // Function using a Bomb Tester
                         GameManagerRef.UseBombTester(tileRow, tileCol);
@@ -169,6 +166,7 @@ public class TileScript : MonoBehaviour
                                 // Chance of 1/12 to get a question for Easy
                                 if (StaticData.difficulty == "E") {
                                     randomChance = Random.Range(0, 12);
+                                    Debug.Log(randomChance);
                                 } else {
                                     // Chance of 1/14 to get a question for Hard
                                     randomChance = Random.Range(0, 14);
