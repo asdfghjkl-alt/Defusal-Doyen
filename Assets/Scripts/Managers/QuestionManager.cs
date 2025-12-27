@@ -77,7 +77,6 @@ public class QuestionManager : MonoBehaviour
             }
             else
             {
-                // 4. File loaded! Get the text.
                 string fileText = www.downloadHandler.text;
                 ProcessGameData(fileText);
             }
@@ -93,7 +92,6 @@ public class QuestionManager : MonoBehaviour
         // Loop through 44 Questions
         for (int i = 0; i < 44; i++)
         {
-            // Safety check: ensure we don't run out of lines
             if (lineIndex >= lines.Length) break;
 
             QuestionDesc[i] = lines[lineIndex++];
