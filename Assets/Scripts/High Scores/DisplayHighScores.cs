@@ -29,12 +29,12 @@ public class HighScores : MonoBehaviour
         }
 
         // Path of the High Scores File
-        string path = Application.dataPath + "/HighScoresData/HighScores" + mode + ".txt";
+        string path = Application.persistentDataPath + "/HighScoresData/HighScores" + mode + ".txt";
 
         // If file doesn't exist in that path
         if (!File.Exists(path)) {
             // Creates a directory
-            Directory.CreateDirectory(Application.dataPath + "/HighScoresData");
+            Directory.CreateDirectory(Application.persistentDataPath + "/HighScoresData");
             
             // Makes the file in that path, and gives it default values of -1
             using (StreamWriter writer = new StreamWriter(path, false)) { 

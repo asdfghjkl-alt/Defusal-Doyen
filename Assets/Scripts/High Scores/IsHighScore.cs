@@ -12,12 +12,14 @@ public class IsHighScore : MonoBehaviour
 
 
         // Path for High Scores File
-        string path = Application.dataPath + "/HighScoresData/HighScores" + StaticData.difficulty + ".txt";
+        string path = Application.persistentDataPath + "/HighScoresData/HighScores" + StaticData.difficulty + ".txt";
 
         if (!File.Exists(path)) {
             // Create directory HighScoresData if directory doesn't exist
-
-            Directory.CreateDirectory(Application.dataPath + "/HighScoresData");
+            string folderPath = Application.persistentDataPath + "/HighScoresData";
+            if (!Directory.Exists(folderPath)) {
+                Directory.CreateDirectory(Application.persistentDataPath + "/HighScoresData");
+            }
 
             // Creates Unfilled Data in file
             using (StreamWriter writer = new StreamWriter(path, false)) { 

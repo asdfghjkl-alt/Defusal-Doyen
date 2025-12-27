@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Networking;
 
 public class QuestionManager : MonoBehaviour
 {
@@ -54,40 +55,79 @@ public class QuestionManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(LoadAndSetupQuestions());
+    }
+
+    IEnumerator LoadAndSetupQuestions()
+    {
         // Path for the Question Data
-        string path = Application.dataPath + "/QuestionData.txt";
-        
-        // Makes Random actually random
-        Random.InitState((int) System.DateTime.Now.Ticks);
+        string path = Path.Combine(Application.streamingAssetsPath, "QuestionData.txt");
 
+        if (!(path.Contains("://") || path.Contains(":///"))) { 
+            path = "file://" + path; 
+        }
 
-        // Reads Question Data file to get 
-        // (Question Prompt/Description, Possible Question Responses, Correct Response)
-        using (StreamReader reader = new StreamReader(path)) {
+        using (UnityWebRequest www = UnityWebRequest.Get(path))
+        {
+            yield return www.SendWebRequest();
 
-            // Loops through 44 Questions
-            for (int i = 0; i < 44; i++) {
-                QuestionDesc[i] = reader.ReadLine();
-
-                for (int j = 0; j < 4; j++) {
-                    QuestionResp[i, j] = reader.ReadLine();
-                }
-                CorrectQuestionResp[i] = int.Parse(reader.ReadLine());
-                CorrectQuestionResp[i] -= 1;
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Error reading file: " + www.error);
+            }
+            else
+            {
+                // 4. File loaded! Get the text.
+                string fileText = www.downloadHandler.text;
+                ProcessGameData(fileText);
             }
         }
+    }
+
+    void ProcessGameData(string data)
+    {
+        string[] lines = data.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+        
+        int lineIndex = 0;
+
+        // Loop through 44 Questions
+        for (int i = 0; i < 44; i++)
+        {
+            // Safety check: ensure we don't run out of lines
+            if (lineIndex >= lines.Length) break;
+
+            QuestionDesc[i] = lines[lineIndex++];
+
+            for (int j = 0; j < 4; j++)
+            {
+                QuestionResp[i, j] = lines[lineIndex++];
+            }
+
+            CorrectQuestionResp[i] = int.Parse(lines[lineIndex++]);
+            CorrectQuestionResp[i] -= 1;
+        }
+
+        // Makes Random actually random
+        Random.InitState((int) System.DateTime.Now.Ticks);
 
         // Randomly generates the question number for which question
         // The user should answer
 
         bool foundUnansweredQ = false;
+        int safetyCounter = 0;
 
-        while (!foundUnansweredQ) {
+        while (!foundUnansweredQ && safetyCounter < 1000) {
             questionNum = Random.Range(0, 44);
             if (!StaticData.AnsweredQs[questionNum]) {
                 foundUnansweredQ = true;
                 StaticData.AnsweredQs[questionNum] = true;
             }
+            safetyCounter++;
+        }
+
+        if (!foundUnansweredQ)
+        {
+            questionNum = Random.Range(0, 44);
         }
 
         // Displays the Question Prompt/Description
